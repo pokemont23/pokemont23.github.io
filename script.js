@@ -1,201 +1,84 @@
 // ========== НАСТРОЙКИ ==========
-const USD_TO_BYN = 3.2; // Курс доллара к белорусскому рублю
+// ССЫЛКА НА ВАШУ ТАБЛИЦУ В ФОРМАТЕ CSV
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTww-OnfU1ca9Ef78Dfd8WpGxP8bheCVLO9rRW-F0UgCktayrfl6suklDsygTcl1uU79o2q--brHV7G/pub?gid=0&single=true&output=csv';
+
+const USD_TO_BYN = 3.2;
 
 function formatPrice(usd) {
     const byn = Math.round(usd * USD_TO_BYN);
     return `${usd.toLocaleString()} $ / ${byn.toLocaleString()} Br`;
 }
 
-// ========== БАЗА ДАННЫХ АВТОМОБИЛЕЙ ==========
-const carsData = [
-    {
-        id: 1,
-        brand: "BMW",
-        model: "X5 40i",
-        year: 2021,
-        mileage: 68000,
-        engine: "3.0 л (340 л.с.)",
-        transmission: "Автомат",
-        color: "Чёрный",
-        priceUSD: 15500,
-        shortDesc: "Премиум внедорожник, полный привод, кожа",
-        fullDesc: "BMW X5 в идеальном состоянии. Полный сервис у официального дилера. 2 владельца. Пакет M Sport, адаптивная подвеска, проекционный дисплей, аудиосистема Harman Kardon.",
-        image: "🚗",
-        isNew: true
-    },
-    {
-        id: 2,
-        brand: "Mercedes-Benz",
-        model: "GLE 350d",
-        year: 2022,
-        mileage: 42000,
-        engine: "3.0 л (367 л.с.)",
-        transmission: "Автомат",
-        color: "Серебристый",
-        priceUSD: 18400,
-        shortDesc: "Дизель, полный привод, AMG пакет",
-        fullDesc: "Mercedes GLE в максимальной комплектации. Подогрев всех сидений, вентиляция, массаж, 360 камер, ночное видение.",
-        image: "🚙",
-        isNew: true
-    },
-    {
-        id: 3,
-        brand: "Kia",
-        model: "Sportage",
-        year: 2023,
-        mileage: 25000,
-        engine: "2.0 л (150 л.с.)",
-        transmission: "Автомат",
-        color: "Белый",
-        priceUSD: 7800,
-        shortDesc: "Городской кроссовер, экономичный",
-        fullDesc: "Kia Sportage 4 поколения. Мультимедиа с большим экраном, подогрев руля и лобового стекла, бесключевой доступ.",
-        image: "🚘",
-        isNew: true
-    },
-    {
-        id: 4,
-        brand: "Hyundai",
-        model: "Solaris",
-        year: 2022,
-        mileage: 33000,
-        engine: "1.6 л (123 л.с.)",
-        transmission: "Автомат",
-        color: "Синий",
-        priceUSD: 5300,
-        shortDesc: "Надёжный седан для города",
-        fullDesc: "Hyundai Solaris в отличном состоянии. Кондиционер, электростеклоподъёмники, подогрев передних сидений.",
-        image: "🚗",
-        isNew: false
-    },
-    {
-        id: 5,
-        brand: "Audi",
-        model: "Q7",
-        year: 2020,
-        mileage: 89000,
-        engine: "3.0 л (333 л.с.)",
-        transmission: "Автомат",
-        color: "Тёмно-синий",
-        priceUSD: 13400,
-        shortDesc: "Семейный 7-местный внедорожник",
-        fullDesc: "Audi Q7 с 3 рядами сидений. Кожаный салон, адаптивный круиз-контроль, система ночного видения, 4 зоны климат-контроля.",
-        image: "🏎️",
-        isNew: false
-    },
-    {
-        id: 6,
-        brand: "Toyota",
-        model: "Land Cruiser Prado",
-        year: 2021,
-        mileage: 55000,
-        engine: "2.8 л (204 л.с.)",
-        transmission: "Автомат",
-        color: "Бежевый",
-        priceUSD: 14900,
-        shortDesc: "Надёжный рамный внедорожник",
-        fullDesc: "Toyota Prado в комплектации Black Edition. Лебёдка, блокировки, холодильник, третий ряд сидений.",
-        image: "🚙",
-        isNew: false
+// ========== ЗАГРУЗКА ДАННЫХ ==========
+let carsData = [];
+
+async function loadCars() {
+    console.log('🔄 Загружаю данные из таблицы...');
+    try {
+        const response = await fetch(CSV_URL);
+        const csvText = await response.text();
+        
+        // Разбираем CSV
+        const rows = csvText.trim().split('\n');
+        const headers = rows[0].split(',').map(h => h.trim().toLowerCase());
+        
+        carsData = [];
+        for (let i = 1; i < rows.length; i++) {
+            const values = rows[i].split(',');
+            const car = {};
+            headers.forEach((header, idx) => {
+                let val = values[idx] ? values[idx].trim().replace(/^"|"$/g, '') : '';
+                car[header] = val;
+            });
+            car.id = i;
+            car.ценаusd = parseFloat(car.ценаusd) || 0;
+            carsData.push(car);
+        }
+        
+        console.log(`✅ Загружено ${carsData.length} автомобилей`);
+        renderNewCars();
+        if (document.getElementById('catalogPage').classList.contains('active-page')) {
+            renderCars(carsData);
+            initFilters();
+        }
+    } catch (error) {
+        console.error('❌ Ошибка:', error);
+        document.getElementById('carsGrid').innerHTML = '<div style="padding:2rem;text-align:center;">⚠️ Ошибка загрузки. Проверьте доступ к таблице.</div>';
     }
-];
-
-// ========== ФУНКЦИИ ДЛЯ МОДАЛЬНЫХ ОКОН ==========
-function openAboutModal() {
-    document.getElementById('aboutModal').style.display = 'flex';
 }
 
-function closeAboutModal() {
-    document.getElementById('aboutModal').style.display = 'none';
-}
-
-function openContactsModal() {
-    document.getElementById('contactsModal').style.display = 'flex';
-}
-
-function closeContactsModal() {
-    document.getElementById('contactsModal').style.display = 'none';
-}
-
-// ========== ПОКАЗ МОДАЛКИ С ДЕТАЛЯМИ ==========
-function showModal(carId) {
-    const car = carsData.find(c => c.id === carId);
-    if (!car) return;
-    
-    const modal = document.getElementById('carModal');
-    const modalDetails = document.getElementById('modalDetails');
-    
-    modalDetails.innerHTML = `
-        <h2>${car.brand} ${car.model}</h2>
-        <div style="margin: 1rem 0; text-align:center; background:#0f151c; border-radius:20px; padding:1rem;">
-            <div style="font-size: 5rem;">${car.image || '🚗'}</div>
-        </div>
-        <div class="modal-specs">
-            <p><strong>Год:</strong> ${car.year}</p>
-            <p><strong>Пробег:</strong> ${car.mileage.toLocaleString()} км</p>
-            <p><strong>Двигатель:</strong> ${car.engine}</p>
-            <p><strong>Коробка:</strong> ${car.transmission}</p>
-            <p><strong>Цвет:</strong> ${car.color}</p>
-            <p><strong>Цена:</strong> ${formatPrice(car.priceUSD)}</p>
-        </div>
-        <div class="modal-desc">
-            <h3>Полное описание:</h3>
-            <p>${car.fullDesc}</p>
-        </div>
-        <button class="btn btn-primary" onclick="document.getElementById('carModal').style.display='none'" style="margin-top:20px;">Закрыть</button>
-    `;
-    modal.style.display = 'flex';
-}
-
-// ========== ОТОБРАЖЕНИЕ КАРТОЧЕК ==========
+// ========== ОТОБРАЖЕНИЕ ==========
 function renderCars(cars, containerId = 'carsGrid') {
     const grid = document.getElementById(containerId);
     if (!grid) return;
+    if (!cars.length) { grid.innerHTML = '<div style="padding:2rem;">🚗 Нет данных</div>'; return; }
     
     grid.innerHTML = '';
-    
     cars.forEach(car => {
         const card = document.createElement('div');
         card.className = 'car-card';
         card.innerHTML = `
-            <div class="car-img-placeholder" style="font-size: 3.5rem;">${car.image || '🚗'}</div>
-            <h3>${car.brand} ${car.model}</h3>
-            <div class="car-specs">${car.year} • ${car.mileage.toLocaleString()} км • ${car.engine}</div>
-            <div class="car-price">${formatPrice(car.priceUSD)}</div>
-            <div class="car-short">${car.shortDesc}</div>
+            <div class="car-img-placeholder" style="font-size:3rem;">🚗</div>
+            <h3>${car.марка || ''} ${car.модель || ''}</h3>
+            <div class="car-specs">${car.год || ''} • ${car.пробег || ''} км • ${car.двигатель || ''}</div>
+            <div class="car-price">${formatPrice(car.ценаusd)}</div>
+            <div class="car-short">${car.краткое_описание || ''}</div>
             <button class="btn-card" onclick="showModal(${car.id})">Подробнее</button>
         `;
         grid.appendChild(card);
     });
 }
 
-// ========== ПОКАЗ САМЫХ НОВЫХ АВТО ==========
-function renderNewCars() {
-    const newCars = carsData.filter(car => car.isNew === true).slice(0, 3);
-    renderCars(newCars, 'newCarsGrid');
-}
-
-// ========== ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ==========
-function showPage(pageName) {
-    const homePage = document.getElementById('homePage');
-    const catalogPage = document.getElementById('catalogPage');
-    
-    if (homePage) homePage.classList.remove('active-page');
-    if (catalogPage) catalogPage.classList.remove('active-page');
-    
-    if (pageName === 'home') {
-        if (homePage) homePage.classList.add('active-page');
-        renderNewCars();
-    } else if (pageName === 'catalog') {
-        if (catalogPage) catalogPage.classList.add('active-page');
-        renderCars(carsData);
-        initFilters();
-    }
-    
-    const navLinks = document.getElementById('navLinks');
-    if (window.innerWidth <= 768 && navLinks) {
-        navLinks.classList.remove('active');
-    }
+function renderNewCars() { renderCars(carsData.slice(0, 3), 'newCarsGrid'); }
+function showModal(id) {
+    const car = carsData.find(c => c.id == id);
+    if (!car) return;
+    document.getElementById('modalDetails').innerHTML = `
+        <h2>${car.марка} ${car.модель}</h2>
+        <div class="modal-specs"><p>Год: ${car.год}</p><p>Пробег: ${car.пробег} км</p><p>Двигатель: ${car.двигатель}</p><p>Коробка: ${car.коробка}</p><p>Цена: ${formatPrice(car.ценаusd)}</p></div>
+        <div class="modal-desc"><h3>Описание</h3><p>${car.полное_описание || ''}</p></div>
+        <button class="btn btn-primary" onclick="document.getElementById('carModal').style.display='none'">Закрыть</button>`;
+    document.getElementById('carModal').style.display = 'flex';
 }
 
 // ========== ФИЛЬТРАЦИЯ ==========
@@ -203,83 +86,53 @@ function initFilters() {
     const searchInput = document.getElementById('searchInput');
     const brandFilter = document.getElementById('brandFilter');
     if (!searchInput || !brandFilter) return;
-    
-    const brands = ['all', ...new Set(carsData.map(c => c.brand))];
+    const brands = ['all', ...new Set(carsData.map(c => c.марка))];
     brandFilter.innerHTML = brands.map(b => `<option value="${b}">${b === 'all' ? 'Все марки' : b}</option>`).join('');
-    
-    function filterCars() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const selectedBrand = brandFilter.value;
-        const filtered = carsData.filter(car => {
-            const matchSearch = car.brand.toLowerCase().includes(searchTerm) || car.model.toLowerCase().includes(searchTerm);
-            const matchBrand = selectedBrand === 'all' || car.brand === selectedBrand;
-            return matchSearch && matchBrand;
-        });
+    const filter = () => {
+        const term = searchInput.value.toLowerCase();
+        const brand = brandFilter.value;
+        const filtered = carsData.filter(c => (c.марка || '').toLowerCase().includes(term) || (c.модель || '').toLowerCase().includes(term)) && carsData.filter(c => brand === 'all' || c.марка === brand);
         renderCars(filtered);
-    }
-    
-    searchInput.addEventListener('input', filterCars);
-    brandFilter.addEventListener('change', filterCars);
-    filterCars();
-}
-
-// ========== ФОРМА ТЕСТ-ДРАЙВА ==========
-const testForm = document.getElementById('testDriveForm');
-const formMessage = document.getElementById('formMessage');
-
-if (testForm) {
-    testForm.onsubmit = (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const carModel = document.getElementById('carModel').value.trim();
-        
-        if (!name || !phone) {
-            if (formMessage) {
-                formMessage.textContent = '❌ Пожалуйста, заполните имя и телефон';
-                formMessage.style.color = '#e86f2c';
-            }
-        } else {
-            let message = `✅ Спасибо, ${name}! Мы свяжемся с вами по номеру ${phone}`;
-            if (carModel) message += ` по поводу авто ${carModel}`;
-            message += '. Ожидайте звонка.';
-            if (formMessage) {
-                formMessage.textContent = message;
-                formMessage.style.color = '#7bcfa6';
-            }
-            testForm.reset();
-        }
-        setTimeout(() => { if (formMessage) formMessage.textContent = ''; }, 5000);
     };
+    searchInput.addEventListener('input', filter);
+    brandFilter.addEventListener('change', filter);
+    filter();
 }
 
-// ========== МОБИЛЬНОЕ МЕНЮ ==========
-const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.getElementById('navLinks');
-if (menuToggle) {
-    menuToggle.onclick = () => { if (navLinks) navLinks.classList.toggle('active'); };
+function showPage(name) {
+    document.getElementById('homePage').classList.toggle('active-page', name === 'home');
+    document.getElementById('catalogPage').classList.toggle('active-page', name === 'catalog');
+    if (name === 'catalog') { renderCars(carsData); initFilters(); }
+    else renderNewCars();
+    if (window.innerWidth <= 768) document.getElementById('navLinks')?.classList.remove('active');
 }
 
-// ========== ЗАКРЫТИЕ МОДАЛОК ==========
-document.querySelectorAll('.close-modal, .close-about-modal, .close-contacts-modal').forEach(btn => {
-    if (btn) {
-        btn.onclick = () => {
-            document.getElementById('carModal').style.display = 'none';
-            document.getElementById('aboutModal').style.display = 'none';
-            document.getElementById('contactsModal').style.display = 'none';
-        };
-    }
+function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
+function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
+function openContactsModal() { document.getElementById('contactsModal').style.display = 'flex'; }
+function closeContactsModal() { document.getElementById('contactsModal').style.display = 'none'; }
+
+document.getElementById('testDriveForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('formMessage');
+    const name = document.getElementById('name')?.value.trim();
+    const phone = document.getElementById('phone')?.value.trim();
+    if (!name || !phone) msg.innerText = '❌ Заполните имя и телефон';
+    else { msg.innerText = `✅ Спасибо, ${name}! Мы свяжемся.`; e.target.reset(); }
+    setTimeout(() => msg.innerText = '', 4000);
 });
 
+document.querySelectorAll('.close-modal, .close-about-modal, .close-contacts-modal').forEach(btn => btn.onclick = () => {
+    document.getElementById('carModal').style.display = 'none';
+    document.getElementById('aboutModal').style.display = 'none';
+    document.getElementById('contactsModal').style.display = 'none';
+});
 window.onclick = (e) => {
-    const carModal = document.getElementById('carModal');
-    const aboutModal = document.getElementById('aboutModal');
-    const contactsModal = document.getElementById('contactsModal');
-    
-    if (e.target === carModal) carModal.style.display = 'none';
-    if (e.target === aboutModal) aboutModal.style.display = 'none';
-    if (e.target === contactsModal) contactsModal.style.display = 'none';
+    if (e.target === document.getElementById('carModal')) document.getElementById('carModal').style.display = 'none';
+    if (e.target === document.getElementById('aboutModal')) document.getElementById('aboutModal').style.display = 'none';
+    if (e.target === document.getElementById('contactsModal')) document.getElementById('contactsModal').style.display = 'none';
 };
 
-// ========== ЗАПУСК ==========
-renderNewCars();
+document.getElementById('menuToggle')?.addEventListener('click', () => document.getElementById('navLinks')?.classList.toggle('active'));
+
+loadCars();
