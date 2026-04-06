@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoHouse | Продажа авто в Беларуси</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo" onclick="showPage('home')">🏎️ AUTOHOUSE.BY</div>
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="showPage('home')">Главная</a></li>
+                <li><a onclick="showPage('catalog')">Все авто</a></li>
+                <li><a onclick="openAboutModal()">О нас</a></li>
+                <li><a onclick="openContactsModal()">Контакты</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- ГЛАВНАЯ СТРАНИЦА -->
+    <div id="homePage" class="page active-page">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="hero-badge">🔥 При покупке — диагностика в подарок</span>
+                    <h1>Автомобили с <span>гарантией</span> в Минске</h1>
+                    <p>Более 300 авто в наличии. Проверка по VIN, кредит, trade-in, юридическая чистота.</p>
+                    <div class="btn-group">
+                        <button onclick="showPage('catalog')" class="btn btn-primary">Смотреть все авто</button>
+                        <button onclick="document.getElementById('contactSection').scrollIntoView({behavior:'smooth'})" class="btn btn-outline">Записаться на тест-драйв</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <svg width="300" height="200" viewBox="0 0 400 200">
+                        <rect x="30" y="90" width="340" height="70" rx="12" fill="#1e2a32" stroke="#f5b042" stroke-width="3"/>
+                        <circle cx="100" cy="160" r="22" fill="#222" stroke="#f5b042" stroke-width="3"/>
+                        <circle cx="300" cy="160" r="22" fill="#222" stroke="#f5b042" stroke-width="3"/>
+                        <path d="M140 115 L220 115 L240 135 L160 135Z" fill="#f5b042"/>
+                        <text x="250" y="120" font-size="12" fill="#f5b042" font-weight="bold">AUTO</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК: САМЫЕ НОВЫЕ АВТО -->
+        <section class="new-cars">
+            <div class="container">
+                <h2 class="section-title">✨ Самые новые поступления</h2>
+                <div class="new-cars-grid" id="newCarsGrid"></div>
+            </div>
+        </section>
+
+        <!-- ПРЕИМУЩЕСТВА -->
+        <section class="about">
+            <div class="container">
+                <h2 class="section-title">Почему выбирают Autohouse.by</h2>
+                <div class="features">
+                    <div class="feature"><div class="feature-icon">🔍</div><h3>Полная проверка</h3><p>150 точек диагностики + история по VIN</p></div>
+                    <div class="feature"><div class="feature-icon">📄</div><h3>Юридическая чистота</h3><p>Проверка на залоги, ДТП, ограничения</p></div>
+                    <div class="feature"><div class="feature-icon">💰</div><h3>Кредит и trade-in</h3><p>Одобрение 95% заявок</p></div>
+                    <div class="feature"><div class="feature-icon">🛠️</div><h3>Гарантия 1 год</h3><p>Собственный техцентр</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ФОРМА ЗАПИСИ НА ТЕСТ-ДРАЙВ -->
+        <section id="contactSection" class="contact">
+            <div class="container">
+                <h2 class="section-title">📅 Записаться на тест-драйв</h2>
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <h3>Приезжайте и убедитесь сами!</h3>
+                        <p>Оставьте заявку, и мы подберём удобное время для тест-драйва.</p>
+                        <ul class="contact-details">
+                            <li>📍 Минск, ул. Партизанская, 150</li>
+                            <li>📞 +375 (29) 123-45-67</li>
+                            <li>✉️ sale@autohouse.by</li>
+                            <li>🕒 Ежедневно 10:00 – 21:00</li>
+                        </ul>
+                    </div>
+                    <form class="contact-form" id="testDriveForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Ваше имя *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" placeholder="Телефон *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="carModel" placeholder="Марка и модель авто (по желанию)">
+                        </div>
+                        <button type="submit" class="btn btn-primary form-btn">📞 Записаться на тест-драйв</button>
+                        <p class="form-message" id="formMessage"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- СТРАНИЦА КАТАЛОГА (ВСЕ АВТО) -->
+    <div id="catalogPage" class="page">
+        <section class="catalog-page">
+            <div class="container">
+                <h1 class="section-title">Наш автопарк</h1>
+                <div class="filters">
+                    <input type="text" id="searchInput" placeholder="🔍 Поиск по марке или модели..." class="search-input">
+                    <select id="brandFilter" class="brand-filter">
+                        <option value="all">Все марки</option>
+                    </select>
+                </div>
+                <div id="carsGrid" class="cars-grid"></div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- ПОДВАЛ -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo">🏎️ AUTOHOUSE.BY</div>
+                <p>Продажа автомобилей с пробегом в Беларуси с 2018 года. Более 300 довольных клиентов.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a onclick="showPage('home')">Главная</a></li>
+                    <li><a onclick="showPage('catalog')">Все авто</a></li>
+                    <li><a onclick="openAboutModal()">О нас</a></li>
+                    <li><a onclick="openContactsModal()">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <ul>
+                    <li>📍 Минск, ул. Партизанская, 150</li>
+                    <li>📞 +375 (29) 123-45-67</li>
+                    <li>✉️ sale@autohouse.by</li>
+                    <li>🕒 10:00 – 21:00 (ежедневно)</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Мы в соцсетях</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">📘</a>
+                    <a href="#" class="social-icon">📸</a>
+                    <a href="#" class="social-icon">💬</a>
+                    <a href="#" class="social-icon">📱</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Autohouse.by. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ АВТО (с галереей) -->
+<div id="carModal" class="modal">
+    <div class="modal-content modal-large">
+        <span class="close-modal">&times;</span>
+        <div id="modalDetails"></div>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО "О НАС" -->
+<div id="aboutModal" class="modal">
+    <div class="modal-content">
+        <span class="close-about-modal">&times;</span>
+        <h2 style="color: #f5b042; margin-bottom: 1rem;">🚗 О компании Autohouse.by</h2>
+        <p style="margin-bottom: 1rem;">Мы — команда профессионалов, которая помогает людям найти надёжный автомобиль с пробегом в Беларуси.</p>
+        <p style="margin-bottom: 1rem;"><strong>Наши принципы:</strong></p>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;">
+            <li>✅ Полная юридическая проверка каждого авто</li>
+            <li>✅ 150-точечная диагностика перед продажей</li>
+            <li>✅ Прозрачная история по VIN</li>
+            <li>✅ Кредит и trade-in для каждого клиента</li>
+            <li>✅ Гарантия 1 год на все автомобили</li>
+        </ul>
+        <p>Работаем с 2018 года. Более 300 проданных автомобилей. Доверие наших клиентов — главная награда!</p>
+        <button class="btn btn-primary" onclick="closeAboutModal()" style="margin-top: 1.5rem;">Закрыть</button>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО "КОНТАКТЫ" -->
+<div id="contactsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-contacts-modal">&times;</span>
+        <h2 style="color: #f5b042; margin-bottom: 1rem;">📞 Наши контакты</h2>
+        <div style="margin: 1rem 0;">
+            <p style="margin: 0.8rem 0;"><strong>📍 Адрес:</strong> г. Минск, ул. Партизанская, 150</p>
+            <p style="margin: 0.8rem 0;"><strong>📞 Телефоны:</strong><br>
+            +375 (29) 123-45-67 (МТС)<br>
+            +375 (33) 123-45-67 (А1)<br>
+            +375 (25) 123-45-67 (Life)</p>
+            <p style="margin: 0.8rem 0;"><strong>✉️ Email:</strong> sale@autohouse.by</p>
+            <p style="margin: 0.8rem 0;"><strong>🕒 Режим работы:</strong><br>
+            Пн-Пт: 10:00 – 21:00<br>
+            Сб-Вс: 11:00 – 19:00</p>
+            <p style="margin: 0.8rem 0;"><strong>📱 Мессенджеры:</strong> WhatsApp, Telegram, Viber</p>
+        </div>
+        <button class="btn btn-primary" onclick="closeContactsModal()" style="margin-top: 0.5rem;">Закрыть</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
