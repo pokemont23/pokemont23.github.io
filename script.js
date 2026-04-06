@@ -1,5 +1,5 @@
 // ========== НАСТРОЙКИ ==========
-const API_URL = 'https://script.google.com/macros/s/AKfycbxwnUg3bbzT2LpWjmLu6Qgw1eh8a3yKU8AHrtrC83MYWsxw8FjD60No0F_1pWFQ56OD/exec';
+const API_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTww-OnfU1ca9Ef78Dfd8WpGxP8bheCVLO9rRW-F0UgCktayrfl6suklDsygTcl1uU79o2q--brHV7G/pubhtml';
 const USD_TO_BYN = 3.2; // Курс доллара
 
 function formatPrice(usd) {
