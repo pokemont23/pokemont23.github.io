@@ -1,7 +1,5 @@
 // ========== НАСТРОЙКИ ==========
-// ССЫЛКА НА ВАШУ ТАБЛИЦУ В ФОРМАТЕ CSV
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTww-OnfU1ca9Ef78Dfd8WpGxP8bheCVLO9rRW-F0UgCktayrfl6suklDsygTcl1uU79o2q--brHV7G/pub?gid=0&single=true&output=csv';
-
 const USD_TO_BYN = 3.2;
 
 function formatPrice(usd) {
@@ -13,12 +11,10 @@ function formatPrice(usd) {
 let carsData = [];
 
 async function loadCars() {
-    console.log('🔄 Загружаю данные из таблицы...');
+    console.log('🔄 Загружаю данные...');
     try {
         const response = await fetch(CSV_URL);
         const csvText = await response.text();
-        
-        // Разбираем CSV
         const rows = csvText.trim().split('\n');
         const headers = rows[0].split(',').map(h => h.trim().toLowerCase());
         
@@ -35,7 +31,7 @@ async function loadCars() {
             carsData.push(car);
         }
         
-        console.log(`✅ Загружено ${carsData.length} автомобилей`);
+        console.log(`✅ Загружено ${carsData.length} авто`);
         renderNewCars();
         if (document.getElementById('catalogPage').classList.contains('active-page')) {
             renderCars(carsData);
@@ -43,11 +39,18 @@ async function loadCars() {
         }
     } catch (error) {
         console.error('❌ Ошибка:', error);
-        document.getElementById('carsGrid').innerHTML = '<div style="padding:2rem;text-align:center;">⚠️ Ошибка загрузки. Проверьте доступ к таблице.</div>';
     }
 }
 
-// ========== ОТОБРАЖЕНИЕ ==========
+// ========== ПОЛУЧИТЬ ФОТО ==========
+function getCarImage(car) {
+    if (car.фото && car.фото.trim() !== '') {
+        return `images/${car.фото}`;
+    }
+    return null; // нет фото
+}
+
+// ========== ОТОБРАЖЕНИЕ КАРТОЧЕК ==========
 function renderCars(cars, containerId = 'carsGrid') {
     const grid = document.getElementById(containerId);
     if (!grid) return;
@@ -55,10 +58,15 @@ function renderCars(cars, containerId = 'carsGrid') {
     
     grid.innerHTML = '';
     cars.forEach(car => {
+        const imagePath = getCarImage(car);
+        const imageHtml = imagePath 
+            ? `<img src="${imagePath}" alt="${car.марка} ${car.модель}" style="width:100%; height:180px; object-fit:cover; border-radius:16px;">`
+            : `<div style="font-size:3rem;">🚗</div>`;
+        
         const card = document.createElement('div');
         card.className = 'car-card';
         card.innerHTML = `
-            <div class="car-img-placeholder" style="font-size:3rem;">🚗</div>
+            <div class="car-img-placeholder">${imageHtml}</div>
             <h3>${car.марка || ''} ${car.модель || ''}</h3>
             <div class="car-specs">${car.год || ''} • ${car.пробег || ''} км • ${car.двигатель || ''}</div>
             <div class="car-price">${formatPrice(car.ценаusd)}</div>
@@ -70,12 +78,25 @@ function renderCars(cars, containerId = 'carsGrid') {
 }
 
 function renderNewCars() { renderCars(carsData.slice(0, 3), 'newCarsGrid'); }
+
 function showModal(id) {
     const car = carsData.find(c => c.id == id);
     if (!car) return;
+    const imagePath = getCarImage(car);
+    const imageHtml = imagePath 
+        ? `<img src="${imagePath}" alt="${car.марка} ${car.модель}" style="max-width:100%; max-height:250px; border-radius:16px;">`
+        : `<div style="font-size:5rem;">🚗</div>`;
+    
     document.getElementById('modalDetails').innerHTML = `
         <h2>${car.марка} ${car.модель}</h2>
-        <div class="modal-specs"><p>Год: ${car.год}</p><p>Пробег: ${car.пробег} км</p><p>Двигатель: ${car.двигатель}</p><p>Коробка: ${car.коробка}</p><p>Цена: ${formatPrice(car.ценаusd)}</p></div>
+        <div style="text-align:center; background:#0f151c; border-radius:20px; padding:1rem; margin:1rem 0;">${imageHtml}</div>
+        <div class="modal-specs">
+            <p><strong>Год:</strong> ${car.год}</p>
+            <p><strong>Пробег:</strong> ${car.пробег} км</p>
+            <p><strong>Двигатель:</strong> ${car.двигатель}</p>
+            <p><strong>Коробка:</strong> ${car.коробка}</p>
+            <p><strong>Цена:</strong> ${formatPrice(car.ценаusd)}</p>
+        </div>
         <div class="modal-desc"><h3>Описание</h3><p>${car.полное_описание || ''}</p></div>
         <button class="btn btn-primary" onclick="document.getElementById('carModal').style.display='none'">Закрыть</button>`;
     document.getElementById('carModal').style.display = 'flex';
@@ -91,7 +112,9 @@ function initFilters() {
     const filter = () => {
         const term = searchInput.value.toLowerCase();
         const brand = brandFilter.value;
-        const filtered = carsData.filter(c => (c.марка || '').toLowerCase().includes(term) || (c.модель || '').toLowerCase().includes(term)) && carsData.filter(c => brand === 'all' || c.марка === brand);
+        const filtered = carsData.filter(c => 
+            (c.марка || '').toLowerCase().includes(term) || (c.модель || '').toLowerCase().includes(term)
+        ).filter(c => brand === 'all' || c.марка === brand);
         renderCars(filtered);
     };
     searchInput.addEventListener('input', filter);
