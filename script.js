@@ -12,6 +12,9 @@ let carsData = [];
 
 async function loadCars() {
     console.log('🔄 Загружаю данные...');
+    const grid = document.getElementById('carsGrid');
+    if (grid) grid.innerHTML = '<div style="padding:2rem;text-align:center;">📥 Загрузка автомобилей...</div>';
+    
     try {
         const response = await fetch(CSV_URL);
         const csvText = await response.text();
@@ -26,9 +29,27 @@ async function loadCars() {
                 let val = values[idx] ? values[idx].trim().replace(/^"|"$/g, '') : '';
                 car[header] = val;
             });
-            car.id = i;
-            car.ценаusd = parseFloat(car.ценаusd) || 0;
-            carsData.push(car);
+            
+            // Разбираем фото (разделитель ; или ,)
+            let photos = [];
+            if (car.фото && car.фото.trim() !== '') {
+                photos = car.фото.split(/[;,]/).map(p => p.trim()).filter(p => p !== '');
+            }
+            
+            carsData.push({
+                id: parseInt(car.id) || i,
+                марка: car.марка || '',
+                модель: car.модель || '',
+                год: car.год || '',
+                пробег: car.пробег || '',
+                двигатель: car.двигатель || '',
+                коробка: car.коробка || '',
+                цвет: car.цвет || '',
+                ценаUSD: parseFloat(car.ценаusd) || 0,
+                краткое_описание: car.краткое_описание || '',
+                полное_описание: car.полное_описание || '',
+                photos: photos.map(p => `images/${p}`)
+            });
         }
         
         console.log(`✅ Загружено ${carsData.length} авто`);
@@ -37,40 +58,24 @@ async function loadCars() {
             renderCars(carsData);
             initFilters();
         }
+        
     } catch (error) {
         console.error('❌ Ошибка:', error);
+        if (grid) grid.innerHTML = '<div style="padding:2rem;text-align:center;color:#e86f2c;">⚠️ Ошибка загрузки данных</div>';
     }
-}
-
-// ========== ПОЛУЧИТЬ ФОТО ==========
-function getCarImage(car, index = 0) {
-    if (car.фото && car.фото.trim() !== '') {
-        const photos = car.фото.split(',').map(p => p.trim());
-        if (photos[index] && photos[index] !== '') {
-            return `images/${photos[index]}`;
-        }
-    }
-    return null;
-}
-
-function getImageCount(car) {
-    if (car.фото && car.фото.trim() !== '') {
-        return car.фото.split(',').filter(p => p.trim() !== '').length;
-    }
-    return 0;
 }
 
 // ========== ОТОБРАЖЕНИЕ КАРТОЧЕК ==========
 function renderCars(cars, containerId = 'carsGrid') {
     const grid = document.getElementById(containerId);
     if (!grid) return;
-    if (!cars.length) { grid.innerHTML = '<div style="padding:2rem;">🚗 Нет данных</div>'; return; }
+    if (!cars.length) { grid.innerHTML = '<div style="padding:2rem;text-align:center;">🚗 Нет автомобилей</div>'; return; }
     
     grid.innerHTML = '';
     cars.forEach(car => {
-        const imagePath = getCarImage(car);
-        const imageHtml = imagePath 
-            ? `<img src="${imagePath}" alt="${car.марка} ${car.модель}">`
+        const firstPhoto = car.photos && car.photos.length > 0 ? car.photos[0] : null;
+        const imageHtml = firstPhoto 
+            ? `<img src="${firstPhoto}" alt="${car.марка} ${car.модель}">`
             : `<div style="font-size:3rem;">🚗</div>`;
         
         const card = document.createElement('div');
@@ -79,7 +84,7 @@ function renderCars(cars, containerId = 'carsGrid') {
             <div class="car-img-placeholder">${imageHtml}</div>
             <h3>${car.марка || ''} ${car.модель || ''}</h3>
             <div class="car-specs">${car.год || ''} • ${car.пробег || ''} км • ${car.двигатель || ''}</div>
-            <div class="car-price">${formatPrice(car.ценаusd)}</div>
+            <div class="car-price">${formatPrice(car.ценаUSD)}</div>
             <div class="car-short">${car.краткое_описание || ''}</div>
             <button class="btn-card" onclick="showModal(${car.id})">Подробнее</button>
         `;
@@ -89,39 +94,41 @@ function renderCars(cars, containerId = 'carsGrid') {
 
 function renderNewCars() { renderCars(carsData.slice(0, 3), 'newCarsGrid'); }
 
-// ========== ГАЛЕРЕЯ В МОДАЛЬНОМ ОКНЕ ==========
+// ========== МОДАЛЬНОЕ ОКНО С ГАЛЕРЕЕЙ ==========
 let currentCar = null;
-let currentImageIndex = 0;
+let currentPhotoIndex = 0;
 
 function showModal(id) {
     currentCar = carsData.find(c => c.id == id);
     if (!currentCar) return;
-    currentImageIndex = 0;
-    updateModalContent();
+    currentPhotoIndex = 0;
+    updateModal();
     document.getElementById('carModal').style.display = 'flex';
 }
 
-function updateModalContent() {
+function updateModal() {
     if (!currentCar) return;
     
-    const imageCount = getImageCount(currentCar);
-    const imagePath = getCarImage(currentCar, currentImageIndex);
-    const imageHtml = imagePath 
-        ? `<img src="${imagePath}" alt="${currentCar.марка} ${currentCar.модель}" id="modalImage">`
+    const photos = currentCar.photos || [];
+    const hasMultiple = photos.length > 1;
+    const currentPhoto = photos.length > 0 ? photos[currentPhotoIndex] : null;
+    
+    const photoHtml = currentPhoto 
+        ? `<img src="${currentPhoto}" alt="${currentCar.марка} ${currentCar.модель}" id="modalPhoto">`
         : `<div style="font-size:5rem;">🚗</div>`;
     
-    // Стрелки навигации (показываем только если фото > 1)
-    const navButtons = imageCount > 1 ? `
-        <button class="gallery-prev" onclick="changeImage(-1)">◀</button>
-        <button class="gallery-next" onclick="changeImage(1)">▶</button>
-        <div class="gallery-counter">${currentImageIndex + 1} / ${imageCount}</div>
+    const navButtons = hasMultiple ? `
+        <button class="gallery-prev" onclick="changePhoto(-1)">◀</button>
+        <button class="gallery-next" onclick="changePhoto(1)">▶</button>
+        <div class="gallery-counter">${currentPhotoIndex + 1} / ${photos.length}</div>
     ` : '';
     
-    document.getElementById('modalDetails').innerHTML = `
+    const modalDetails = document.getElementById('modalDetails');
+    modalDetails.innerHTML = `
         <h2>${currentCar.марка || ''} ${currentCar.модель || ''}</h2>
         <div class="modal-gallery">
             <div class="gallery-container">
-                ${imageHtml}
+                ${photoHtml}
                 ${navButtons}
             </div>
         </div>
@@ -131,36 +138,33 @@ function updateModalContent() {
             <p><strong>🔧 Двигатель:</strong> ${currentCar.двигатель || ''}</p>
             <p><strong>⚙️ Коробка:</strong> ${currentCar.коробка || ''}</p>
             <p><strong>🎨 Цвет:</strong> ${currentCar.цвет || ''}</p>
-            <p><strong>💰 Цена:</strong> ${formatPrice(currentCar.ценаusd)}</p>
+            <p><strong>💰 Цена:</strong> ${formatPrice(currentCar.ценаUSD)}</p>
         </div>
         <div class="modal-desc">
             <h3>📝 Полное описание</h3>
-            <p style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.6;">${currentCar.полное_описание || 'Нет описания'}</p>
+            <div class="full-description">${(currentCar.полное_описание || 'Нет описания').replace(/\n/g, '<br>')}</div>
         </div>
-        <button class="btn btn-primary close-modal-btn" onclick="document.getElementById('carModal').style.display='none'">Закрыть</button>
+        <button class="btn btn-primary" onclick="document.getElementById('carModal').style.display='none'">Закрыть</button>
     `;
 }
 
-function changeImage(direction) {
+function changePhoto(direction) {
     if (!currentCar) return;
-    const imageCount = getImageCount(currentCar);
-    if (imageCount <= 1) return;
+    const photos = currentCar.photos || [];
+    if (photos.length <= 1) return;
     
-    currentImageIndex += direction;
-    if (currentImageIndex < 0) currentImageIndex = imageCount - 1;
-    if (currentImageIndex >= imageCount) currentImageIndex = 0;
+    currentPhotoIndex += direction;
+    if (currentPhotoIndex < 0) currentPhotoIndex = photos.length - 1;
+    if (currentPhotoIndex >= photos.length) currentPhotoIndex = 0;
     
-    // Обновляем фото
-    const newImagePath = getCarImage(currentCar, currentImageIndex);
-    const imgElement = document.getElementById('modalImage');
-    if (imgElement && newImagePath) {
-        imgElement.src = newImagePath;
+    const photoElement = document.getElementById('modalPhoto');
+    if (photoElement) {
+        photoElement.src = photos[currentPhotoIndex];
     }
     
-    // Обновляем счётчик
     const counter = document.querySelector('.gallery-counter');
     if (counter) {
-        counter.textContent = `${currentImageIndex + 1} / ${imageCount}`;
+        counter.textContent = `${currentPhotoIndex + 1} / ${photos.length}`;
     }
 }
 
@@ -169,8 +173,10 @@ function initFilters() {
     const searchInput = document.getElementById('searchInput');
     const brandFilter = document.getElementById('brandFilter');
     if (!searchInput || !brandFilter) return;
+    
     const brands = ['all', ...new Set(carsData.map(c => c.марка))];
     brandFilter.innerHTML = brands.map(b => `<option value="${b}">${b === 'all' ? 'Все марки' : b}</option>`).join('');
+    
     const filter = () => {
         const term = searchInput.value.toLowerCase();
         const brand = brandFilter.value;
@@ -182,6 +188,7 @@ function initFilters() {
         }
         renderCars(filtered);
     };
+    
     searchInput.addEventListener('input', filter);
     brandFilter.addEventListener('change', filter);
     filter();
