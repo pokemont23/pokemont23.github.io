@@ -445,17 +445,33 @@ body {
 .modal-content {
     background: #1a212b;
     border-radius: 32px;
-    max-width: 550px;
+    max-width: 600px;
     width: 90%;
     padding: 2rem;
     position: relative;
     border: 2px solid #f5b042;
-    max-height: 85vh;
+    max-height: 90vh;
     overflow-y: auto;
 }
 
+/* Стили для скроллбара внутри модального окна */
+.modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #2a353f;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #f5b042;
+    border-radius: 10px;
+}
+
 .modal-large {
-    max-width: 700px;
+    max-width: 800px;
+    width: 95%;
 }
 
 .close-modal, .close-about-modal, .close-contacts-modal {
@@ -468,7 +484,7 @@ body {
     transition: 0.2s;
 }
 
-.close-modal:hover, .close-about-modal:hover, .close-contacts-modal:hover {
+.close-modal:hover, .close-about-modal, .close-contacts-modal:hover {
     color: #e88c2a;
     transform: scale(1.1);
 }
