@@ -604,9 +604,14 @@ body {
     font-size: 1.2rem;
 }
 
-.modal-desc p {
+.full-description {
     line-height: 1.6;
     color: #b6c8da;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: none;
+    overflow: visible;
+    font-size: 0.95rem;
 }
 
 /* ===== ПОДВАЛ ===== */
