@@ -607,7 +607,7 @@ body {
 .full-description {
     line-height: 1.6;
     color: #b6c8da;
-    white-space: pre-wrap;
+    white-space: normal;
     word-wrap: break-word;
     max-height: none;
     overflow: visible;
