@@ -196,7 +196,7 @@ body {
 }
 
 /* ===== ПРЕИМУЩЕСТВА ===== */
-.about {
+.about-section {
     padding: 5rem 0;
     background: #0f1419;
 }
@@ -252,7 +252,7 @@ body {
     color: #b6c8da;
 }
 
-/* ===== ФОРМА ЗАПИСИ НА ТЕСТ-ДРАЙВ ===== */
+/* ===== ФОРМА ЗАПИСИ ===== */
 .contact {
     padding: 5rem 0;
     background: #0c1117;
@@ -375,10 +375,6 @@ body {
     cursor: pointer;
 }
 
-.brand-filter:focus {
-    outline: none;
-}
-
 .cars-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -390,57 +386,75 @@ body {
     background: #1a212b;
     border-radius: 24px;
     padding: 1.5rem;
-    transition: all 0.2s;
+    transition: all 0.3s;
     border: 1px solid #2f3a44;
+    display: flex;
+    flex-direction: column;
 }
 
 .car-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     border-color: #f5b042;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
 }
 
+/* Контейнер для фото */
 .car-img-placeholder {
-    text-align: center;
     background: #0f151c;
-    border-radius: 16px;
-    padding: 0.5rem;
+    border-radius: 20px;
+    padding: 1rem;
     margin-bottom: 1rem;
-    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 180px;
+    min-height: 180px;
+    overflow: hidden;
 }
 
 .car-img-placeholder img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 160px;
     object-fit: contain;
     border-radius: 12px;
+    transition: transform 0.3s;
+}
+
+.car-card:hover .car-img-placeholder img {
+    transform: scale(1.02);
 }
 
 .car-img-placeholder div {
-    font-size: 3rem;
+    font-size: 3.5rem;
+}
+
+/* Текст карточки */
+.car-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
 }
 
 .car-specs {
     color: #9bb3c9;
     font-size: 0.85rem;
-    margin: 0.5rem 0;
+    margin: 0.25rem 0;
+    line-height: 1.4;
 }
 
 .car-price {
     font-size: 1.3rem;
     font-weight: 800;
     color: #f5b042;
-    margin: 0.5rem 0;
+    margin: 0.75rem 0;
 }
 
 .car-short {
     color: #9bb3c9;
     font-size: 0.85rem;
-    margin: 0.5rem 0;
+    margin: 0.25rem 0;
+    line-height: 1.4;
 }
 
 /* ===== МОДАЛЬНОЕ ОКНО ===== */
@@ -451,7 +465,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -460,7 +474,7 @@ body {
 .modal-content {
     background: #1a212b;
     border-radius: 32px;
-    max-width: 600px;
+    max-width: 650px;
     width: 90%;
     padding: 2rem;
     position: relative;
@@ -469,7 +483,6 @@ body {
     overflow-y: auto;
 }
 
-/* Стили для скроллбара внутри модального окна */
 .modal-content::-webkit-scrollbar {
     width: 6px;
 }
@@ -484,11 +497,6 @@ body {
     border-radius: 10px;
 }
 
-.modal-large {
-    max-width: 800px;
-    width: 95%;
-}
-
 .close-modal, .close-about-modal, .close-contacts-modal {
     position: absolute;
     top: 15px;
@@ -497,14 +505,15 @@ body {
     cursor: pointer;
     color: #f5b042;
     transition: 0.2s;
+    z-index: 10;
 }
 
-.close-modal:hover, .close-about-modal:hover, .close-contacts-modal:hover {
+.close-modal:hover {
     color: #e88c2a;
     transform: scale(1.1);
 }
 
-/* ГАЛЕРЕЯ В МОДАЛЬНОМ ОКНЕ */
+/* Галерея */
 .modal-gallery {
     margin: 1rem 0;
 }
@@ -516,12 +525,12 @@ body {
     justify-content: center;
     background: #0f151c;
     border-radius: 20px;
-    min-height: 250px;
+    min-height: 260px;
 }
 
 .gallery-container img {
     max-width: 100%;
-    max-height: 280px;
+    max-height: 260px;
     object-fit: contain;
     border-radius: 16px;
 }
@@ -562,11 +571,12 @@ body {
     font-size: 0.85rem;
 }
 
+/* Характеристики в модалке */
 .modal-specs {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.5rem 1rem;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     padding: 1rem;
     background: #0f151c;
     border-radius: 20px;
@@ -575,6 +585,11 @@ body {
 .modal-specs p {
     margin: 0;
     color: #ddd;
+    font-size: 0.95rem;
+}
+
+.modal-specs strong {
+    color: #f5b042;
 }
 
 .modal-desc {
@@ -585,18 +600,13 @@ body {
 
 .modal-desc h3 {
     color: #f5b042;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.2rem;
 }
 
 .modal-desc p {
     line-height: 1.6;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-.close-modal-btn {
-    margin-top: 1.5rem;
-    width: 100%;
+    color: #b6c8da;
 }
 
 /* ===== ПОДВАЛ ===== */
@@ -604,6 +614,7 @@ body {
     background: #070b0f;
     padding: 3rem 0 1.5rem;
     border-top: 1px solid #f5b04220;
+    margin-top: 2rem;
 }
 
 .footer-grid {
@@ -664,7 +675,6 @@ body {
     height: 40px;
     background: #1a212b;
     border-radius: 50%;
-    text-align: center;
     font-size: 1.2rem;
     transition: 0.2s;
     text-decoration: none;
@@ -754,7 +764,7 @@ body {
     
     .modal-specs {
         grid-template-columns: 1fr;
-        gap: 0.3rem;
+        gap: 0.5rem;
     }
 }
 
@@ -776,9 +786,21 @@ body {
     }
     
     .gallery-prev, .gallery-next {
-        width: 35px;
-        height: 35px;
+        width: 32px;
+        height: 32px;
         font-size: 1.2rem;
+    }
+    
+    .car-img-placeholder {
+        min-height: 140px;
+    }
+    
+    .car-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .car-price {
+        font-size: 1.1rem;
     }
 }
 
@@ -795,24 +817,5 @@ body {
 }
 
 .car-card, .feature {
-    animation: fadeIn 0.5s ease-out;
-}
-
-/* ===== СКРОЛЛБАР ===== */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #1a212b;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #f5b042;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #e88c2a;
+    animation: fadeIn 0.4s ease-out;
 }
