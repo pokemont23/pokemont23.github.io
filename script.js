@@ -43,11 +43,21 @@ async function loadCars() {
 }
 
 // ========== ПОЛУЧИТЬ ФОТО ==========
-function getCarImage(car) {
+function getCarImage(car, index = 0) {
     if (car.фото && car.фото.trim() !== '') {
-        return `images/${car.фото}`;
+        const photos = car.фото.split(',').map(p => p.trim());
+        if (photos[index] && photos[index] !== '') {
+            return `images/${photos[index]}`;
+        }
     }
-    return null; // нет фото
+    return null;
+}
+
+function getImageCount(car) {
+    if (car.фото && car.фото.trim() !== '') {
+        return car.фото.split(',').filter(p => p.trim() !== '').length;
+    }
+    return 0;
 }
 
 // ========== ОТОБРАЖЕНИЕ КАРТОЧЕК ==========
@@ -60,7 +70,7 @@ function renderCars(cars, containerId = 'carsGrid') {
     cars.forEach(car => {
         const imagePath = getCarImage(car);
         const imageHtml = imagePath 
-            ? `<img src="${imagePath}" alt="${car.марка} ${car.модель}" style="width:100%; height:180px; object-fit:cover; border-radius:16px;">`
+            ? `<img src="${imagePath}" alt="${car.марка} ${car.модель}">`
             : `<div style="font-size:3rem;">🚗</div>`;
         
         const card = document.createElement('div');
@@ -79,27 +89,79 @@ function renderCars(cars, containerId = 'carsGrid') {
 
 function renderNewCars() { renderCars(carsData.slice(0, 3), 'newCarsGrid'); }
 
+// ========== ГАЛЕРЕЯ В МОДАЛЬНОМ ОКНЕ ==========
+let currentCar = null;
+let currentImageIndex = 0;
+
 function showModal(id) {
-    const car = carsData.find(c => c.id == id);
-    if (!car) return;
-    const imagePath = getCarImage(car);
+    currentCar = carsData.find(c => c.id == id);
+    if (!currentCar) return;
+    currentImageIndex = 0;
+    updateModalContent();
+    document.getElementById('carModal').style.display = 'flex';
+}
+
+function updateModalContent() {
+    if (!currentCar) return;
+    
+    const imageCount = getImageCount(currentCar);
+    const imagePath = getCarImage(currentCar, currentImageIndex);
     const imageHtml = imagePath 
-        ? `<img src="${imagePath}" alt="${car.марка} ${car.модель}" style="max-width:100%; max-height:250px; border-radius:16px;">`
+        ? `<img src="${imagePath}" alt="${currentCar.марка} ${currentCar.модель}" id="modalImage">`
         : `<div style="font-size:5rem;">🚗</div>`;
     
+    // Стрелки навигации (показываем только если фото > 1)
+    const navButtons = imageCount > 1 ? `
+        <button class="gallery-prev" onclick="changeImage(-1)">◀</button>
+        <button class="gallery-next" onclick="changeImage(1)">▶</button>
+        <div class="gallery-counter">${currentImageIndex + 1} / ${imageCount}</div>
+    ` : '';
+    
     document.getElementById('modalDetails').innerHTML = `
-        <h2>${car.марка} ${car.модель}</h2>
-        <div style="text-align:center; background:#0f151c; border-radius:20px; padding:1rem; margin:1rem 0;">${imageHtml}</div>
-        <div class="modal-specs">
-            <p><strong>Год:</strong> ${car.год}</p>
-            <p><strong>Пробег:</strong> ${car.пробег} км</p>
-            <p><strong>Двигатель:</strong> ${car.двигатель}</p>
-            <p><strong>Коробка:</strong> ${car.коробка}</p>
-            <p><strong>Цена:</strong> ${formatPrice(car.ценаusd)}</p>
+        <h2>${currentCar.марка || ''} ${currentCar.модель || ''}</h2>
+        <div class="modal-gallery">
+            <div class="gallery-container">
+                ${imageHtml}
+                ${navButtons}
+            </div>
         </div>
-        <div class="modal-desc"><h3>Описание</h3><p>${car.полное_описание || ''}</p></div>
-        <button class="btn btn-primary" onclick="document.getElementById('carModal').style.display='none'">Закрыть</button>`;
-    document.getElementById('carModal').style.display = 'flex';
+        <div class="modal-specs">
+            <p><strong>📅 Год:</strong> ${currentCar.год || ''}</p>
+            <p><strong>📊 Пробег:</strong> ${currentCar.пробег || ''} км</p>
+            <p><strong>🔧 Двигатель:</strong> ${currentCar.двигатель || ''}</p>
+            <p><strong>⚙️ Коробка:</strong> ${currentCar.коробка || ''}</p>
+            <p><strong>🎨 Цвет:</strong> ${currentCar.цвет || ''}</p>
+            <p><strong>💰 Цена:</strong> ${formatPrice(currentCar.ценаusd)}</p>
+        </div>
+        <div class="modal-desc">
+            <h3>📝 Полное описание</h3>
+            <p style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.6;">${currentCar.полное_описание || 'Нет описания'}</p>
+        </div>
+        <button class="btn btn-primary close-modal-btn" onclick="document.getElementById('carModal').style.display='none'">Закрыть</button>
+    `;
+}
+
+function changeImage(direction) {
+    if (!currentCar) return;
+    const imageCount = getImageCount(currentCar);
+    if (imageCount <= 1) return;
+    
+    currentImageIndex += direction;
+    if (currentImageIndex < 0) currentImageIndex = imageCount - 1;
+    if (currentImageIndex >= imageCount) currentImageIndex = 0;
+    
+    // Обновляем фото
+    const newImagePath = getCarImage(currentCar, currentImageIndex);
+    const imgElement = document.getElementById('modalImage');
+    if (imgElement && newImagePath) {
+        imgElement.src = newImagePath;
+    }
+    
+    // Обновляем счётчик
+    const counter = document.querySelector('.gallery-counter');
+    if (counter) {
+        counter.textContent = `${currentImageIndex + 1} / ${imageCount}`;
+    }
 }
 
 // ========== ФИЛЬТРАЦИЯ ==========
@@ -112,9 +174,12 @@ function initFilters() {
     const filter = () => {
         const term = searchInput.value.toLowerCase();
         const brand = brandFilter.value;
-        const filtered = carsData.filter(c => 
+        let filtered = carsData.filter(c => 
             (c.марка || '').toLowerCase().includes(term) || (c.модель || '').toLowerCase().includes(term)
-        ).filter(c => brand === 'all' || c.марка === brand);
+        );
+        if (brand !== 'all') {
+            filtered = filtered.filter(c => c.марка === brand);
+        }
         renderCars(filtered);
     };
     searchInput.addEventListener('input', filter);
