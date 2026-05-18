@@ -513,6 +513,41 @@ body {
     overflow-wrap: break-word;
     font-size: 0.95rem;
 }
+/* ===== ПОЛНОЕ ОПИСАНИЕ — БЕЗ ОБРЕЗАНИЯ ===== */
+.modal-desc {
+    margin-top: 1rem;
+    border-top: 1px solid #3a4a5a;
+    padding-top: 1rem;
+}
+
+.modal-desc h3 {
+    color: #f5b042;
+    margin-bottom: 0.75rem;
+    font-size: 1.2rem;
+}
+
+.full-description {
+    line-height: 1.6;
+    color: #b6c8da;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    font-size: 0.95rem;
+}
+
+/* Убираем ограничения в самом модальном окне */
+.modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content .modal-desc {
+    overflow: visible;
+    max-height: none;
+}
 
 /* ===== ПОДВАЛ ===== */
 .footer {
