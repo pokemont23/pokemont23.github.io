@@ -775,3 +775,52 @@ body {
 .car-card, .feature {
     animation: fadeIn 0.4s ease-out;
 }
+
+/* ===== УЛУЧШЕННОЕ ПОЛНОЕ ОПИСАНИЕ ===== */
+.full-description {
+    line-height: 1.7;
+    color: #e0e6ed;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 0.95rem;
+    max-height: none;
+    overflow: visible;
+    background: #0d1217;
+    padding: 1rem 1.2rem;
+    border-radius: 16px;
+    margin-top: 0.5rem;
+}
+
+/* Стили для списков внутри описания */
+.full-description ul,
+.full-description ol {
+    margin: 0.8rem 0 0.8rem 1.5rem;
+    padding-left: 0;
+}
+
+.full-description li {
+    margin: 0.4rem 0;
+    line-height: 1.6;
+}
+
+/* Стили для заголовков внутри описания */
+.full-description h4,
+.full-description strong {
+    color: #f5b042;
+    font-weight: 600;
+}
+
+/* Абзацы внутри описания */
+.full-description p {
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+}
+
+/* Разделители внутри описания */
+.full-description hr {
+    margin: 1rem 0;
+    border: none;
+    height: 1px;
+    background: #2a353f;
+}
