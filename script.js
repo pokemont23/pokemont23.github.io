@@ -207,15 +207,23 @@ function closeAboutModal() { document.getElementById('aboutModal').style.display
 function openContactsModal() { document.getElementById('contactsModal').style.display = 'flex'; }
 function closeContactsModal() { document.getElementById('contactsModal').style.display = 'none'; }
 
-document.getElementById('testDriveForm')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const msg = document.getElementById('formMessage');
-    const name = document.getElementById('name')?.value.trim();
-    const phone = document.getElementById('phone')?.value.trim();
-    if (!name || !phone) msg.innerText = '❌ Заполните имя и телефон';
-    else { msg.innerText = `✅ Спасибо, ${name}! Мы свяжемся.`; e.target.reset(); }
-    setTimeout(() => msg.innerText = '', 4000);
-});
+// ========== ФОРМА ТЕСТ-ДРАЙВА ==========
+// Форма отправляется через FormSubmit, JS только показывает сообщение
+const testForm = document.getElementById('testDriveForm');
+const formMessage = document.getElementById('formMessage');
+
+if (testForm) {
+    testForm.addEventListener('submit', function(e) {
+        // Не отменяем отправку, пусть форма работает как обычно
+        if (formMessage) {
+            formMessage.textContent = '✅ Заявка отправляется...';
+            formMessage.style.color = '#7bcfa6';
+        }
+        setTimeout(() => {
+            if (formMessage) formMessage.textContent = '';
+        }, 4000);
+    });
+}
 
 document.querySelectorAll('.close-modal, .close-about-modal, .close-contacts-modal').forEach(btn => btn.onclick = () => {
     document.getElementById('carModal').style.display = 'none';
