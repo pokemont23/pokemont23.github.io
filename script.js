@@ -193,7 +193,6 @@ function initFilters() {
     filter();
 }
 
-// ========== ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ==========
 function showPage(name) {
     document.getElementById('homePage').classList.toggle('active-page', name === 'home');
     document.getElementById('catalogPage').classList.toggle('active-page', name === 'catalog');
@@ -202,7 +201,6 @@ function showPage(name) {
     if (window.innerWidth <= 768) document.getElementById('navLinks')?.classList.remove('active');
 }
 
-// ========== МОДАЛЬНЫЕ ОКНА ==========
 function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
 function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
 function openContactsModal() { document.getElementById('contactsModal').style.display = 'flex'; }
