@@ -30,7 +30,6 @@ async function loadCars() {
                 car[header] = val;
             });
             
-            // Разбираем фото (разделитель ; или ,)
             let photos = [];
             if (car.фото && car.фото.trim() !== '') {
                 photos = car.фото.split(/[;,]/).map(p => p.trim()).filter(p => p !== '');
@@ -209,7 +208,7 @@ function closeAboutModal() { document.getElementById('aboutModal').style.display
 function openContactsModal() { document.getElementById('contactsModal').style.display = 'flex'; }
 function closeContactsModal() { document.getElementById('contactsModal').style.display = 'none'; }
 
-// ========== ФОРМА ТЕСТ-ДРАЙВА (ПРОСТАЯ, БЕЗ EMAIL) ==========
+// ========== ФОРМА ТЕСТ-ДРАЙВА ==========
 const testForm = document.getElementById('testDriveForm');
 const formMessage = document.getElementById('formMessage');
 
@@ -256,7 +255,7 @@ if (menuToggle) {
     });
 }
 
-// ========== ЗАКРЫТИЕ МОДАЛОК ПРИ КЛИКЕ НА КРЕСТИК ==========
+// ========== ЗАКРЫТИЕ МОДАЛОК ==========
 document.querySelectorAll('.close-modal, .close-about-modal, .close-contacts-modal').forEach(btn => {
     if (btn) {
         btn.addEventListener('click', function() {
@@ -267,7 +266,6 @@ document.querySelectorAll('.close-modal, .close-about-modal, .close-contacts-mod
     }
 });
 
-// ========== ЗАКРЫТИЕ МОДАЛОК ПРИ КЛИКЕ НА ФОН ==========
 window.addEventListener('click', function(e) {
     const carModal = document.getElementById('carModal');
     const aboutModal = document.getElementById('aboutModal');
