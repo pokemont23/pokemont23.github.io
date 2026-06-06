@@ -207,35 +207,67 @@ function closeAboutModal() { document.getElementById('aboutModal').style.display
 function openContactsModal() { document.getElementById('contactsModal').style.display = 'flex'; }
 function closeContactsModal() { document.getElementById('contactsModal').style.display = 'none'; }
 
-// ========== ФОРМА ТЕСТ-ДРАЙВА ==========
-// Форма отправляется через FormSubmit, JS только показывает сообщение
-const testForm = document.getElementById('testDriveForm');
-const formMessage = document.getElementById('formMessage');
+// ========== EMAILJS ФОРМА ТЕСТ-ДРАЙВА ==========
+const EMAILJS_SERVICE_ID = 'service_fzv2ep3';
+const EMAILJS_TEMPLATE_ID = 'template_anpxh2k';
+const EMAILJS_PUBLIC_KEY = 'wjf6w7Rb0kONhP3Jv';
 
-if (testForm) {
-    testForm.addEventListener('submit', function(e) {
-        // Не отменяем отправку, пусть форма работает как обычно
-        if (formMessage) {
-            formMessage.textContent = '✅ Заявка отправляется...';
-            formMessage.style.color = '#7bcfa6';
+// Инициализация EmailJS
+(function() {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+})();
+
+const emailForm = document.getElementById('testDriveForm');
+const emailMessage = document.getElementById('formMessage');
+
+if (emailForm) {
+    emailForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name')?.value.trim();
+        const phone = document.getElementById('phone')?.value.trim();
+        const car = document.getElementById('car')?.value.trim();
+        
+        if (!name || !phone) {
+            if (emailMessage) {
+                emailMessage.textContent = '❌ Пожалуйста, заполните имя и телефон';
+                emailMessage.style.color = '#e86f2c';
+            }
+            return;
         }
-        setTimeout(() => {
-            if (formMessage) formMessage.textContent = '';
-        }, 4000);
+        
+        if (emailMessage) {
+            emailMessage.textContent = '📧 Отправка заявки...';
+            emailMessage.style.color = '#f5b042';
+        }
+        
+        const now = new Date();
+        const dateStr = now.toLocaleString('ru-RU');
+        
+        const templateParams = {
+            имя: name,
+            телефон: phone,
+            автомобиль: car || 'Не указан',
+            дата: dateStr
+        };
+        
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+            .then(function() {
+                if (emailMessage) {
+                    emailMessage.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
+                    emailMessage.style.color = '#7bcfa6';
+                }
+                emailForm.reset();
+                setTimeout(() => {
+                    if (emailMessage) emailMessage.textContent = '';
+                }, 5000);
+            })
+            .catch(function(error) {
+                console.error('Ошибка:', error);
+                if (emailMessage) {
+                    emailMessage.textContent = '❌ Ошибка отправки. Попробуйте позже или позвоните нам.';
+                    emailMessage.style.color = '#e86f2c';
+                }
+            });
     });
 }
-
-document.querySelectorAll('.close-modal, .close-about-modal, .close-contacts-modal').forEach(btn => btn.onclick = () => {
-    document.getElementById('carModal').style.display = 'none';
-    document.getElementById('aboutModal').style.display = 'none';
-    document.getElementById('contactsModal').style.display = 'none';
-});
-window.onclick = (e) => {
-    if (e.target === document.getElementById('carModal')) document.getElementById('carModal').style.display = 'none';
-    if (e.target === document.getElementById('aboutModal')) document.getElementById('aboutModal').style.display = 'none';
-    if (e.target === document.getElementById('contactsModal')) document.getElementById('contactsModal').style.display = 'none';
-};
-
-document.getElementById('menuToggle')?.addEventListener('click', () => document.getElementById('navLinks')?.classList.toggle('active'));
-
-loadCars();
