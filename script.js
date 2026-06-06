@@ -213,9 +213,7 @@ const EMAILJS_TEMPLATE_ID = 'template_anpxh2k';
 const EMAILJS_PUBLIC_KEY = 'wjf6w7Rb0kONhP3Jv';
 
 // Инициализация EmailJS
-(function() {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-})();
+emailjs.init(EMAILJS_PUBLIC_KEY);
 
 const emailForm = document.getElementById('testDriveForm');
 const emailMessage = document.getElementById('formMessage');
