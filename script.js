@@ -194,6 +194,7 @@ function initFilters() {
     filter();
 }
 
+// ========== ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ==========
 function showPage(name) {
     document.getElementById('homePage').classList.toggle('active-page', name === 'home');
     document.getElementById('catalogPage').classList.toggle('active-page', name === 'catalog');
@@ -202,72 +203,80 @@ function showPage(name) {
     if (window.innerWidth <= 768) document.getElementById('navLinks')?.classList.remove('active');
 }
 
+// ========== МОДАЛЬНЫЕ ОКНА ==========
 function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
 function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
 function openContactsModal() { document.getElementById('contactsModal').style.display = 'flex'; }
 function closeContactsModal() { document.getElementById('contactsModal').style.display = 'none'; }
 
-// ========== EMAILJS ФОРМА ТЕСТ-ДРАЙВА (v4) ==========
-const EMAILJS_SERVICE_ID = 'service_fzv2ep3';
-const EMAILJS_TEMPLATE_ID = 'template_anpxh2k';
-const EMAILJS_PUBLIC_KEY = 'wjf6w7Rb0kONhP3Jv';
+// ========== ФОРМА ТЕСТ-ДРАЙВА (ПРОСТАЯ, БЕЗ EMAIL) ==========
+const testForm = document.getElementById('testDriveForm');
+const formMessage = document.getElementById('formMessage');
 
-// Инициализация EmailJS v4
-emailjs.init({
-    publicKey: EMAILJS_PUBLIC_KEY,
-});
-
-const emailForm = document.getElementById('testDriveForm');
-const emailMessage = document.getElementById('formMessage');
-
-if (emailForm) {
-    emailForm.addEventListener('submit', function(e) {
+if (testForm) {
+    testForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const name = document.getElementById('name')?.value.trim();
         const phone = document.getElementById('phone')?.value.trim();
-        const car = document.getElementById('car')?.value.trim();
+        const carModel = document.getElementById('carModel')?.value.trim();
         
         if (!name || !phone) {
-            if (emailMessage) {
-                emailMessage.textContent = '❌ Пожалуйста, заполните имя и телефон';
-                emailMessage.style.color = '#e86f2c';
+            if (formMessage) {
+                formMessage.textContent = '❌ Пожалуйста, заполните имя и телефон';
+                formMessage.style.color = '#e86f2c';
             }
             return;
         }
         
-        if (emailMessage) {
-            emailMessage.textContent = '📧 Отправка заявки...';
-            emailMessage.style.color = '#f5b042';
+        let message = `✅ Спасибо, ${name}! Мы свяжемся с вами по номеру ${phone}`;
+        if (carModel) message += ` по поводу авто ${carModel}`;
+        message += '. Ожидайте звонка.';
+        
+        if (formMessage) {
+            formMessage.textContent = message;
+            formMessage.style.color = '#7bcfa6';
         }
         
-        const now = new Date();
-        const dateStr = now.toLocaleString('ru-RU');
+        testForm.reset();
         
-        const templateParams = {
-            имя: name,
-            телефон: phone,
-            автомобиль: car || 'Не указан',
-            дата: dateStr
-        };
-        
-        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-            .then(function() {
-                if (emailMessage) {
-                    emailMessage.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
-                    emailMessage.style.color = '#7bcfa6';
-                }
-                emailForm.reset();
-                setTimeout(() => {
-                    if (emailMessage) emailMessage.textContent = '';
-                }, 5000);
-            })
-            .catch(function(error) {
-                console.error('Ошибка:', error);
-                if (emailMessage) {
-                    emailMessage.textContent = '❌ Ошибка отправки. Попробуйте позже или позвоните нам.';
-                    emailMessage.style.color = '#e86f2c';
-                }
-            });
+        setTimeout(() => {
+            if (formMessage) formMessage.textContent = '';
+        }, 5000);
     });
 }
+
+// ========== МОБИЛЬНОЕ МЕНЮ ==========
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+if (menuToggle) {
+    menuToggle.addEventListener('click', function() {
+        if (navLinks) navLinks.classList.toggle('active');
+    });
+}
+
+// ========== ЗАКРЫТИЕ МОДАЛОК ПРИ КЛИКЕ НА КРЕСТИК ==========
+document.querySelectorAll('.close-modal, .close-about-modal, .close-contacts-modal').forEach(btn => {
+    if (btn) {
+        btn.addEventListener('click', function() {
+            document.getElementById('carModal').style.display = 'none';
+            document.getElementById('aboutModal').style.display = 'none';
+            document.getElementById('contactsModal').style.display = 'none';
+        });
+    }
+});
+
+// ========== ЗАКРЫТИЕ МОДАЛОК ПРИ КЛИКЕ НА ФОН ==========
+window.addEventListener('click', function(e) {
+    const carModal = document.getElementById('carModal');
+    const aboutModal = document.getElementById('aboutModal');
+    const contactsModal = document.getElementById('contactsModal');
+    
+    if (e.target === carModal) carModal.style.display = 'none';
+    if (e.target === aboutModal) aboutModal.style.display = 'none';
+    if (e.target === contactsModal) contactsModal.style.display = 'none';
+});
+
+// ========== ЗАПУСК ==========
+loadCars();
