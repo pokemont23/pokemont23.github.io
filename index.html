@@ -85,19 +85,22 @@
                             <li>🕒 Ежедневно 10:00 – 21:00</li>
                         </ul>
                     </div>
-                    <form class="contact-form" id="testDriveForm">
-                        <div class="form-group">
-                            <input type="text" id="name" placeholder="Ваше имя *" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" id="phone" placeholder="Телефон *" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="carModel" placeholder="Марка и модель авто (по желанию)">
-                        </div>
-                        <button type="submit" class="btn btn-primary form-btn">📞 Записаться на тест-драйв</button>
-                        <p class="form-message" id="formMessage"></p>
-                    </form>
+                    <form class="contact-form" action="https://formsubmit.co/pokemont23@gmail.com" method="POST" target="_blank">
+    <input type="hidden" name="_subject" value="Новая заявка на тест-драйв!">
+    <input type="hidden" name="_captcha" value="false">
+    
+    <div class="form-group">
+        <input type="text" name="Имя" placeholder="Ваше имя *" required>
+    </div>
+    <div class="form-group">
+        <input type="tel" name="Телефон" placeholder="Телефон *" required>
+    </div>
+    <div class="form-group">
+        <input type="text" name="Автомобиль" placeholder="Марка и модель авто (по желанию)">
+    </div>
+    <button type="submit" class="btn btn-primary form-btn">📞 Записаться на тест-драйв</button>
+    <p class="form-message" id="formMessage"></p>
+</form>
                 </div>
             </div>
         </section>
