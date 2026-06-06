@@ -207,13 +207,15 @@ function closeAboutModal() { document.getElementById('aboutModal').style.display
 function openContactsModal() { document.getElementById('contactsModal').style.display = 'flex'; }
 function closeContactsModal() { document.getElementById('contactsModal').style.display = 'none'; }
 
-// ========== EMAILJS ФОРМА ТЕСТ-ДРАЙВА ==========
+// ========== EMAILJS ФОРМА ТЕСТ-ДРАЙВА (v4) ==========
 const EMAILJS_SERVICE_ID = 'service_fzv2ep3';
 const EMAILJS_TEMPLATE_ID = 'template_anpxh2k';
 const EMAILJS_PUBLIC_KEY = 'wjf6w7Rb0kONhP3Jv';
 
-// Инициализация EmailJS
-emailjs.init(EMAILJS_PUBLIC_KEY);
+// Инициализация EmailJS v4
+emailjs.init({
+    publicKey: EMAILJS_PUBLIC_KEY,
+});
 
 const emailForm = document.getElementById('testDriveForm');
 const emailMessage = document.getElementById('formMessage');
