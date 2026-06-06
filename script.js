@@ -2,6 +2,11 @@
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTww-OnfU1ca9Ef78Dfd8WpGxP8bheCVLO9rRW-F0UgCktayrfl6suklDsygTcl1uU79o2q--brHV7G/pub?gid=0&single=true&output=csv';
 const USD_TO_BYN = 3.2;
 
+// ========== EMAILJS КЛЮЧИ ==========
+const EMAILJS_SERVICE_ID = 'service_fzv2ep3';
+const EMAILJS_TEMPLATE_ID = 'template_anpxh2k';
+const EMAILJS_PUBLIC_KEY = 'wjf6w7Rb0kONhP3Jv';
+
 function formatPrice(usd) {
     const byn = Math.round(usd * USD_TO_BYN);
     return `${usd.toLocaleString()} $ / ${byn.toLocaleString()} Br`;
@@ -206,7 +211,9 @@ function closeAboutModal() { document.getElementById('aboutModal').style.display
 function openContactsModal() { document.getElementById('contactsModal').style.display = 'flex'; }
 function closeContactsModal() { document.getElementById('contactsModal').style.display = 'none'; }
 
-// ========== ФОРМА ТЕСТ-ДРАЙВА ==========
+// ========== EMAILJS ФОРМА ТЕСТ-ДРАЙВА ==========
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
 const testForm = document.getElementById('testDriveForm');
 const formMessage = document.getElementById('formMessage');
 
@@ -226,20 +233,39 @@ if (testForm) {
             return;
         }
         
-        let message = `✅ Спасибо, ${name}! Мы свяжемся с вами по номеру ${phone}`;
-        if (carModel) message += ` по поводу авто ${carModel}`;
-        message += '. Ожидайте звонка.';
-        
         if (formMessage) {
-            formMessage.textContent = message;
-            formMessage.style.color = '#7bcfa6';
+            formMessage.textContent = '📧 Отправка заявки...';
+            formMessage.style.color = '#f5b042';
         }
         
-        testForm.reset();
+        const now = new Date();
+        const dateStr = now.toLocaleString('ru-RU');
         
-        setTimeout(() => {
-            if (formMessage) formMessage.textContent = '';
-        }, 5000);
+        const templateParams = {
+            имя: name,
+            телефон: phone,
+            автомобиль: carModel || 'Не указан',
+            дата: dateStr
+        };
+        
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+            .then(function() {
+                if (formMessage) {
+                    formMessage.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
+                    formMessage.style.color = '#7bcfa6';
+                }
+                testForm.reset();
+                setTimeout(() => {
+                    if (formMessage) formMessage.textContent = '';
+                }, 5000);
+            })
+            .catch(function(error) {
+                console.error('Ошибка EmailJS:', error);
+                if (formMessage) {
+                    formMessage.textContent = '❌ Ошибка отправки. Попробуйте позже или позвоните нам.';
+                    formMessage.style.color = '#e86f2c';
+                }
+            });
     });
 }
 
