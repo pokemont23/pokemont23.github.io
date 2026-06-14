@@ -96,8 +96,8 @@ function renderCars(cars, containerId = 'carsGrid') {
     });
 }
 
+// ========== САМЫЕ НОВЫЕ ПОСТУПЛЕНИЯ (ПО МАКСИМАЛЬНОМУ ID) ==========
 function renderNewCars() {
-    // Сортируем машины по id (от большего к меньшему) и берём первые 3
     const sortedCars = [...carsData].sort((a, b) => b.id - a.id);
     const newCars = sortedCars.slice(0, 3);
     renderCars(newCars, 'newCarsGrid');
@@ -216,7 +216,7 @@ function closeAboutModal() { document.getElementById('aboutModal').style.display
 function openContactsModal() { document.getElementById('contactsModal').style.display = 'flex'; }
 function closeContactsModal() { document.getElementById('contactsModal').style.display = 'none'; }
 
-// ========== EMAILJS ФОРМА ТЕСТ-ДРАЙВА ==========
+// ========== EMAILJS ФОРМА ЗАПРОСА ЗВОНКА ==========
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
 const testForm = document.getElementById('testDriveForm');
@@ -239,7 +239,7 @@ if (testForm) {
         }
         
         if (formMessage) {
-            formMessage.textContent = '📧 Отправка заявки...';
+            formMessage.textContent = '📧 Отправка запроса...';
             formMessage.style.color = '#f5b042';
         }
         
@@ -256,7 +256,7 @@ if (testForm) {
         emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
             .then(function() {
                 if (formMessage) {
-                    formMessage.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
+                    formMessage.textContent = '✅ Запрос отправлен! Мы перезвоним вам в ближайшее время.';
                     formMessage.style.color = '#7bcfa6';
                 }
                 testForm.reset();
