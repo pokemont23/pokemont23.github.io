@@ -96,7 +96,12 @@ function renderCars(cars, containerId = 'carsGrid') {
     });
 }
 
-function renderNewCars() { renderCars(carsData.slice(0, 3), 'newCarsGrid'); }
+function renderNewCars() {
+    // Сортируем машины по id (от большего к меньшему) и берём первые 3
+    const sortedCars = [...carsData].sort((a, b) => b.id - a.id);
+    const newCars = sortedCars.slice(0, 3);
+    renderCars(newCars, 'newCarsGrid');
+}
 
 // ========== МОДАЛЬНОЕ ОКНО С ГАЛЕРЕЕЙ ==========
 let currentCar = null;
