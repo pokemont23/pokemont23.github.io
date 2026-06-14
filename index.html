@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoHouse | Продажа авто в Беларуси</title>
+    <title>ЛУЧШЕЕ АВТО | Продажа авто в Минске</title>
     <link rel="stylesheet" href="style.css">
     <!-- EmailJS библиотека -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -13,7 +13,7 @@
 <header class="header">
     <div class="container">
         <div class="navbar">
-            <div class="logo" onclick="showPage('home')">🏎️ AUTOHOUSE.BY</div>
+            <div class="logo" onclick="showPage('home')">🏎️ ЛУЧШЕЕ АВТО</div>
             <button class="menu-toggle" id="menuToggle">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a onclick="showPage('home')">Главная</a></li>
@@ -31,12 +31,12 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <span class="hero-badge">🔥 При покупке — диагностика в подарок</span>
-                    <h1>Автомобили с <span>гарантией</span> в Минске</h1>
-                    <p>Более 300 авто в наличии. Проверка по VIN, кредит, trade-in, юридическая чистота.</p>
+                    <span class="hero-badge">🔥 Кредит и лизинг от 0%</span>
+                    <h1>Автомобили с <span>проверкой</span> в Минске</h1>
+                    <p>Более 300 авто в наличии. Кредит и лизинг без первого взноса. Работаем с лучшими банками и лизинговыми компаниями.</p>
                     <div class="btn-group">
                         <button onclick="showPage('catalog')" class="btn btn-primary">Смотреть все авто</button>
-                        <button onclick="document.getElementById('contactSection').scrollIntoView({behavior:'smooth'})" class="btn btn-outline">Записаться на тест-драйв</button>
+                        <button onclick="document.getElementById('contactSection').scrollIntoView({behavior:'smooth'})" class="btn btn-outline">Запросить звонок специалиста</button>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -62,29 +62,30 @@
         <!-- ПРЕИМУЩЕСТВА -->
         <section class="about">
             <div class="container">
-                <h2 class="section-title">Почему выбирают Autohouse.by</h2>
+                <h2 class="section-title">Почему выбирают ЛУЧШЕЕ АВТО</h2>
                 <div class="features">
                     <div class="feature"><div class="feature-icon">🔍</div><h3>Полная проверка</h3><p>150 точек диагностики + история по VIN</p></div>
                     <div class="feature"><div class="feature-icon">📄</div><h3>Юридическая чистота</h3><p>Проверка на залоги, ДТП, ограничения</p></div>
-                    <div class="feature"><div class="feature-icon">💰</div><h3>Кредит и trade-in</h3><p>Одобрение 95% заявок</p></div>
-                    <div class="feature"><div class="feature-icon">🛠️</div><h3>Гарантия 1 год</h3><p>Собственный техцентр</p></div>
+                    <div class="feature"><div class="feature-icon">💰</div><h3>Кредит и лизинг</h3><p>Без первого взноса. Лучшие проценты. Работаем со всеми банками</p></div>
+                    <div class="feature"><div class="feature-icon">🛠️</div><h3>Свой техцентр</h3><p>Полная диагностика перед продажей</p></div>
                 </div>
             </div>
         </section>
 
-        <!-- ФОРМА ЗАПИСИ НА ТЕСТ-ДРАЙВ -->
+        <!-- ФОРМА ЗАПРОСА ЗВОНКА -->
         <section id="contactSection" class="contact">
             <div class="container">
-                <h2 class="section-title">📅 Записаться на тест-драйв</h2>
+                <h2 class="section-title">📞 Запросить звонок специалиста</h2>
                 <div class="contact-wrapper">
                     <div class="contact-info">
-                        <h3>Приезжайте и убедитесь сами!</h3>
-                        <p>Оставьте заявку, и мы подберём удобное время для тест-драйва.</p>
+                        <h3>Оставьте заявку — мы перезвоним!</h3>
+                        <p>Поможем подобрать автомобиль, рассчитать кредит или лизинг, ответим на все вопросы.</p>
                         <ul class="contact-details">
-                            <li>📍 Минск, ул. Партизанская, 150</li>
-                            <li>📞 +375 (29) 123-45-67</li>
-                            <li>✉️ sale@autohouse.by</li>
-                            <li>🕒 Ежедневно 10:00 – 21:00</li>
+                            <li>📍 Минск, ул. Наполеона Орды, 30 (стоянка №79)</li>
+                            <li>📞 +375 29 789-39-67</li>
+                            <li>📞 +375 25 789-39-67</li>
+                            <li>✉️ sale@luchsheeauto.by</li>
+                            <li>🕒 Ежедневно 9:00 – 20:00</li>
                         </ul>
                     </div>
                     <form class="contact-form" id="testDriveForm">
@@ -97,7 +98,7 @@
                         <div class="form-group">
                             <input type="text" id="carModel" name="car" placeholder="Марка и модель авто (по желанию)">
                         </div>
-                        <button type="submit" class="btn btn-primary form-btn">📞 Записаться на тест-драйв</button>
+                        <button type="submit" class="btn btn-primary form-btn">📞 Запросить звонок</button>
                         <p class="form-message" id="formMessage"></p>
                     </form>
                 </div>
@@ -127,8 +128,8 @@
     <div class="container">
         <div class="footer-grid">
             <div class="footer-col">
-                <div class="footer-logo">🏎️ AUTOHOUSE.BY</div>
-                <p>Продажа автомобилей с пробегом в Беларуси с 2018 года. Более 300 довольных клиентов.</p>
+                <div class="footer-logo">🏎️ ЛУЧШЕЕ АВТО</div>
+                <p>Продажа автомобилей с пробегом в Минске с 2018 года. Более 300 довольных клиентов.</p>
             </div>
             <div class="footer-col">
                 <h4>Навигация</h4>
@@ -142,10 +143,11 @@
             <div class="footer-col">
                 <h4>Контакты</h4>
                 <ul>
-                    <li>📍 Минск, ул. Партизанская, 150</li>
-                    <li>📞 +375 (29) 123-45-67</li>
-                    <li>✉️ sale@autohouse.by</li>
-                    <li>🕒 10:00 – 21:00 (ежедневно)</li>
+                    <li>📍 Минск, ул. Наполеона Орды, 30 (стоянка №79)</li>
+                    <li>📞 +375 29 789-39-67</li>
+                    <li>📞 +375 25 789-39-67</li>
+                    <li>✉️ sale@luchsheeauto.by</li>
+                    <li>🕒 9:00 – 20:00 (ежедневно)</li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -159,7 +161,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Autohouse.by. Все права защищены.</p>
+            <p>© 2025 ЛУЧШЕЕ АВТО. Продажа авто с пробегом в Минске.</p>
         </div>
     </div>
 </footer>
@@ -175,15 +177,15 @@
 <div id="aboutModal" class="modal">
     <div class="modal-content">
         <span class="close-about-modal">&times;</span>
-        <h2 style="color: #f5b042; margin-bottom: 1rem;">🚗 О компании Autohouse.by</h2>
-        <p style="margin-bottom: 1rem;">Мы — команда профессионалов, которая помогает людям найти надёжный автомобиль с пробегом в Беларуси.</p>
+        <h2 style="color: #f5b042; margin-bottom: 1rem;">🚗 О компании ЛУЧШЕЕ АВТО</h2>
+        <p style="margin-bottom: 1rem;">Мы — команда профессионалов, которая помогает людям найти надёжный автомобиль с пробегом в Минске.</p>
         <p style="margin-bottom: 1rem;"><strong>Наши принципы:</strong></p>
         <ul style="margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;">
             <li>✅ Полная юридическая проверка каждого авто</li>
             <li>✅ 150-точечная диагностика перед продажей</li>
             <li>✅ Прозрачная история по VIN</li>
-            <li>✅ Кредит и trade-in для каждого клиента</li>
-            <li>✅ Гарантия 1 год на все автомобили</li>
+            <li>✅ Кредит и лизинг без первого взноса</li>
+            <li>✅ Работаем со всеми банками и лизинговыми компаниями</li>
         </ul>
         <p>Работаем с 2018 года. Более 300 проданных автомобилей. Доверие наших клиентов — главная награда!</p>
         <button class="btn btn-primary" onclick="closeAboutModal()" style="margin-top: 1.5rem;">Закрыть</button>
@@ -195,16 +197,15 @@
         <span class="close-contacts-modal">&times;</span>
         <h2 style="color: #f5b042; margin-bottom: 1rem;">📞 Наши контакты</h2>
         <div style="margin: 1rem 0;">
-            <p style="margin: 0.8rem 0;"><strong>📍 Адрес:</strong> г. Минск, ул. Партизанская, 150</p>
+            <p style="margin: 0.8rem 0;"><strong>📍 Адрес:</strong> г. Минск, ул. Наполеона Орды, 30 (стоянка №79)</p>
             <p style="margin: 0.8rem 0;"><strong>📞 Телефоны:</strong><br>
-            +375 (29) 123-45-67 (МТС)<br>
-            +375 (33) 123-45-67 (А1)<br>
-            +375 (25) 123-45-67 (Life)</p>
-            <p style="margin: 0.8rem 0;"><strong>✉️ Email:</strong> sale@autohouse.by</p>
+            +375 29 789-39-67 (МТС)<br>
+            +375 25 789-39-67 (Life)</p>
+            <p style="margin: 0.8rem 0;"><strong>✉️ Email:</strong> sale@luchsheeauto.by</p>
             <p style="margin: 0.8rem 0;"><strong>🕒 Режим работы:</strong><br>
-            Пн-Пт: 10:00 – 21:00<br>
-            Сб-Вс: 11:00 – 19:00</p>
-            <p style="margin: 0.8rem 0;"><strong>📱 Мессенджеры:</strong> WhatsApp, Telegram, Viber</p>
+            Ежедневно: 9:00 – 20:00</p>
+            <p style="margin: 0.8rem 0;"><strong>📱 Мы в соцсетях:</strong><br>
+            Instagram | TikTok | Telegram</p>
         </div>
         <button class="btn btn-primary" onclick="closeContactsModal()" style="margin-top: 0.5rem;">Закрыть</button>
     </div>
