@@ -41,91 +41,117 @@
                 </div>
                 <div class="hero-image">
 <svg width="340" height="240" viewBox="0 0 340 240" xmlns="http://www.w3.org/2000/svg">
-    <!-- Круглый фон с градиентом -->
+    <!-- Градиенты -->
     <defs>
         <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#1e2a32"/>
-            <stop offset="100%" stop-color="#11151a"/>
+            <stop offset="100%" stop-color="#0f151c"/>
         </radialGradient>
-        <linearGradient id="carGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#eef2f5"/>
-            <stop offset="100%" stop-color="#cfdfed"/>
+        <linearGradient id="carBody" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#e8edf2"/>
+            <stop offset="100%" stop-color="#b8c8d8"/>
         </linearGradient>
         <linearGradient id="windowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stop-color="#4FC3F7"/>
-            <stop offset="100%" stop-color="#0288D1"/>
+            <stop offset="100%" stop-color="#0277BD"/>
         </linearGradient>
-        <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <filter id="shadow">
             <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.3"/>
         </filter>
     </defs>
 
     <!-- Круглый фон -->
-    <circle cx="170" cy="120" r="100" fill="url(#bgGrad)" stroke="#66BB6A" stroke-width="3"/>
+    <circle cx="170" cy="120" r="100" fill="url(#bgGrad)" stroke="#2E7D32" stroke-width="3"/>
 
     <!-- Тень под машиной -->
-    <ellipse cx="170" cy="165" rx="80" ry="8" fill="#000" opacity="0.2"/>
+    <ellipse cx="170" cy="165" rx="85" ry="8" fill="#000" opacity="0.25"/>
+
+    <!-- Нижняя часть кузова (пороги) -->
+    <rect x="60" y="135" width="220" height="12" rx="4" fill="#1a2a3a" stroke="#2E7D32" stroke-width="1.5"/>
 
     <!-- Основной кузов -->
-    <path d="M55 130 L80 95 L130 80 L190 80 L240 95 L295 130 L285 140 L55 140 Z" 
-          fill="url(#carGrad)" stroke="#66BB6A" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M55 130 L75 95 L130 80 L195 80 L250 95 L295 130 L295 138 L55 138 Z" 
+          fill="url(#carBody)" stroke="#2E7D32" stroke-width="2.5" stroke-linejoin="round"/>
+
+    <!-- Крыша -->
+    <path d="M115 80 L130 58 L195 58 L225 80 Z" 
+          fill="#d0dce8" stroke="#2E7D32" stroke-width="2" stroke-linejoin="round"/>
+
+    <!-- Стойки крыши (передняя) -->
+    <path d="M115 80 L130 58" stroke="#2E7D32" stroke-width="2.5"/>
+
+    <!-- Стойки крыши (задняя) -->
+    <path d="M195 58 L225 80" stroke="#2E7D32" stroke-width="2.5"/>
+
+    <!-- Окна -->
+    <path d="M120 78 L132 62 L148 62 L148 78 Z" fill="url(#windowGrad)" opacity="0.9"/>
+    <path d="M155 78 L155 62 L175 62 L175 78 Z" fill="url(#windowGrad)" opacity="0.9"/>
+    <path d="M182 78 L182 62 L195 62 L208 78 Z" fill="url(#windowGrad)" opacity="0.9"/>
+
+    <!-- Блики на стёклах -->
+    <path d="M125 68 L130 63 L142 63 L137 70 Z" fill="white" opacity="0.3"/>
+    <path d="M158 68 L163 63 L173 63 L168 70 Z" fill="white" opacity="0.3"/>
 
     <!-- Капот (деталь) -->
-    <path d="M240 95 L270 108 L290 115 L295 130 L240 130 Z" 
-          fill="#b0c4d9" stroke="#66BB6A" stroke-width="1.5" stroke-linejoin="round" opacity="0.5"/>
-
-    <!-- Крыша машины -->
-    <path d="M115 80 L130 58 L190 58 L220 80 Z" 
-          fill="#cfdfed" stroke="#66BB6A" stroke-width="2" stroke-linejoin="round"/>
-
-    <!-- Окна (стеклоподъёмники) -->
-    <path d="M125 78 L135 62 L148 62 L148 78 Z" fill="url(#windowGrad)" opacity="0.9"/>
-    <path d="M155 78 L155 62 L175 62 L175 78 Z" fill="url(#windowGrad)" opacity="0.9"/>
-    <path d="M182 78 L182 62 L195 62 L205 78 Z" fill="url(#windowGrad)" opacity="0.9"/>
+    <path d="M230 98 L270 115 L295 130 L250 130 Z" 
+          fill="#a0b8cc" opacity="0.3"/>
 
     <!-- Боковое зеркало -->
-    <rect x="108" y="92" width="12" height="6" rx="3" fill="#b0c4d9" stroke="#66BB6A" stroke-width="1.5"/>
+    <rect x="108" y="90" width="14" height="6" rx="3" fill="#1a2a3a" stroke="#2E7D32" stroke-width="1.5"/>
+    <rect x="112" y="88" width="8" height="4" rx="2" fill="#4FC3F7" opacity="0.6"/>
 
-    <!-- Фары (передние - светодиодные) -->
-    <rect x="265" y="105" width="22" height="10" rx="4" fill="#FFEE58" stroke="#66BB6A" stroke-width="1.5"/>
-    <rect x="268" y="108" width="6" height="4" rx="2" fill="#FFF9C4"/>
+    <!-- Передние фары (светодиодные) -->
+    <rect x="268" y="108" width="20" height="10" rx="4" fill="#FFEE58" stroke="#2E7D32" stroke-width="1.5"/>
+    <rect x="272" y="110" width="6" height="4" rx="2" fill="#FFF9C4"/>
+    <circle cx="280" cy="113" r="1.5" fill="white" opacity="0.5"/>
 
     <!-- Задние фонари -->
-    <rect x="48" y="105" width="14" height="10" rx="3" fill="#EF5350" stroke="#66BB6A" stroke-width="1.5"/>
-    <rect x="50" y="108" width="4" height="4" rx="1" fill="#FF8A80"/>
+    <rect x="48" y="108" width="12" height="10" rx="3" fill="#EF5350" stroke="#2E7D32" stroke-width="1.5"/>
+    <rect x="50" y="110" width="4" height="4" rx="1" fill="#FF8A80"/>
 
-    <!-- Колёса -->
-    <!-- Левое колесо -->
-    <circle cx="100" cy="155" r="26" fill="#11151a" stroke="#66BB6A" stroke-width="3"/>
-    <circle cx="100" cy="155" r="18" fill="#2a353f"/>
-    <circle cx="100" cy="155" r="10" fill="#3a4a5a"/>
-    <circle cx="100" cy="155" r="4" fill="#66BB6A"/>
+    <!-- Передний бампер (зелёный акцент) -->
+    <rect x="292" y="128" width="6" height="10" rx="2" fill="#2E7D32"/>
+
+    <!-- Задний бампер (зелёный акцент) -->
+    <rect x="52" y="128" width="6" height="10" rx="2" fill="#2E7D32"/>
+
+    <!-- Дверные ручки -->
+    <rect x="160" y="100" width="14" height="3" rx="1.5" fill="#2E7D32" opacity="0.6"/>
+    <rect x="200" y="100" width="14" height="3" rx="1.5" fill="#2E7D32" opacity="0.6"/>
+
+    <!-- Линия боковины (дизайнерская) -->
+    <path d="M80 118 L260 118" stroke="#2E7D32" stroke-width="1.5" opacity="0.4"/>
+
+    <!-- Колёса (левое) -->
+    <circle cx="100" cy="155" r="28" fill="#0f151c" stroke="#2E7D32" stroke-width="3"/>
+    <circle cx="100" cy="155" r="20" fill="#1a2a3a"/>
+    <circle cx="100" cy="155" r="12" fill="#2a3a4a"/>
+    <circle cx="100" cy="155" r="5" fill="#2E7D32"/>
     <!-- Спицы левого колеса -->
-    <line x1="100" y1="137" x2="100" y2="173" stroke="#4a5a6a" stroke-width="1.5"/>
-    <line x1="82" y1="155" x2="118" y2="155" stroke="#4a5a6a" stroke-width="1.5"/>
-    <line x1="87" y1="142" x2="113" y2="168" stroke="#4a5a6a" stroke-width="1.5"/>
-    <line x1="113" y1="142" x2="87" y2="168" stroke="#4a5a6a" stroke-width="1.5"/>
+    <line x1="100" y1="135" x2="100" y2="175" stroke="#3a4a5a" stroke-width="1.5"/>
+    <line x1="80" y1="155" x2="120" y2="155" stroke="#3a4a5a" stroke-width="1.5"/>
+    <line x1="86" y1="141" x2="114" y2="169" stroke="#3a4a5a" stroke-width="1.5"/>
+    <line x1="114" y1="141" x2="86" y2="169" stroke="#3a4a5a" stroke-width="1.5"/>
 
-    <!-- Правое колесо -->
-    <circle cx="250" cy="155" r="26" fill="#11151a" stroke="#66BB6A" stroke-width="3"/>
-    <circle cx="250" cy="155" r="18" fill="#2a353f"/>
-    <circle cx="250" cy="155" r="10" fill="#3a4a5a"/>
-    <circle cx="250" cy="155" r="4" fill="#66BB6A"/>
+    <!-- Колёса (правое) -->
+    <circle cx="250" cy="155" r="28" fill="#0f151c" stroke="#2E7D32" stroke-width="3"/>
+    <circle cx="250" cy="155" r="20" fill="#1a2a3a"/>
+    <circle cx="250" cy="155" r="12" fill="#2a3a4a"/>
+    <circle cx="250" cy="155" r="5" fill="#2E7D32"/>
     <!-- Спицы правого колеса -->
-    <line x1="250" y1="137" x2="250" y2="173" stroke="#4a5a6a" stroke-width="1.5"/>
-    <line x1="232" y1="155" x2="268" y2="155" stroke="#4a5a6a" stroke-width="1.5"/>
-    <line x1="237" y1="142" x2="263" y2="168" stroke="#4a5a6a" stroke-width="1.5"/>
-    <line x1="263" y1="142" x2="237" y2="168" stroke="#4a5a6a" stroke-width="1.5"/>
+    <line x1="250" y1="135" x2="250" y2="175" stroke="#3a4a5a" stroke-width="1.5"/>
+    <line x1="230" y1="155" x2="270" y2="155" stroke="#3a4a5a" stroke-width="1.5"/>
+    <line x1="236" y1="141" x2="264" y2="169" stroke="#3a4a5a" stroke-width="1.5"/>
+    <line x1="264" y1="141" x2="236" y2="169" stroke="#3a4a5a" stroke-width="1.5"/>
 
     <!-- Текст AUTO внизу круга -->
     <text x="170" y="215" font-family="system-ui, sans-serif" font-size="20" fill="#66BB6A" text-anchor="middle" font-weight="800" letter-spacing="3">AUTO</text>
 
-    <!-- Декоративные блики на стеклах -->
-    <path d="M130 65 L135 60 L145 60 L140 67 Z" fill="white" opacity="0.4"/>
-    <path d="M160 65 L165 60 L175 60 L170 67 Z" fill="white" opacity="0.4"/>
+    <!-- Маленький зелёный акцент на круге (снизу) -->
+    <path d="M145 218 L195 218" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
 
-    <!-- Маленький блик на фаре -->
-    <circle cx="270" cy="108" r="2" fill="white" opacity="0.6"/>
+    <!-- Блик на кузове -->
+    <path d="M85 110 L105 105 L115 105 L105 112 Z" fill="white" opacity="0.15"/>
 </svg>
                 </div>
             </div>
