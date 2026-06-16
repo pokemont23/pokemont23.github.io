@@ -70,10 +70,6 @@
             <stop offset="0%" stop-color="#FFF9C4" stop-opacity="0.4"/>
             <stop offset="100%" stop-color="#FFF9C4" stop-opacity="0"/>
         </radialGradient>
-        <radialGradient id="wheelCenter" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#4a5a6a"/>
-            <stop offset="100%" stop-color="#1a2a3a"/>
-        </radialGradient>
         <filter id="softGlow">
             <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#A5D6A7" flood-opacity="0.15"/>
         </filter>
@@ -86,10 +82,7 @@
     <circle cx="180" cy="125" r="105" fill="url(#bgGrad)" stroke="#A5D6A7" stroke-width="2" opacity="0.6"/>
     <circle cx="180" cy="125" r="98" fill="none" stroke="#A5D6A7" stroke-width="0.5" opacity="0.15"/>
 
-    <!-- Тень под машиной -->
-    <ellipse cx="180" cy="180" rx="88" ry="8" fill="#000" opacity="0.25"/>
-
-    <!-- ===== КУЗОВ (ровный по горизонтали) ===== -->
+    <!-- ===== КУЗОВ (без колёс) ===== -->
     <path d="M50 135 C45 142, 42 150, 48 158 L70 158 L290 158 L312 158 C318 150, 315 142, 310 135 L50 135 Z" 
           fill="url(#carBody)" stroke="#A5D6A7" stroke-width="2.2" filter="url(#softGlow)"/>
 
@@ -156,45 +149,9 @@
     <path d="M115 164 L135 160 L135 166 L115 170 Z" fill="#0a1219" stroke="#4CAF50" stroke-width="0.8"/>
     <path d="M245 164 L225 160 L225 166 L245 170 Z" fill="#0a1219" stroke="#4CAF50" stroke-width="0.8"/>
 
-    <!-- ===== КОЛЁСА (КРУПНЫЕ, МОЩНЫЕ) ===== -->
-    <!-- Левое колесо (увеличено) -->
-    <circle cx="90" cy="172" r="38" fill="#0a1219" stroke="#4CAF50" stroke-width="2.8"/>
-    <circle cx="90" cy="172" r="32" fill="#1a2a3a" stroke="#2a3a4a" stroke-width="1.5"/>
-    <circle cx="90" cy="172" r="22" fill="url(#wheelCenter)"/>
-    <circle cx="90" cy="172" r="16" fill="#2a3a4a"/>
-    <!-- Спицы (мощные) -->
-    <path d="M90 155 L90 163" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M90 189 L90 181" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M68 172 L82 172" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M112 172 L98 172" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M74 157 L85 164" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M106 187 L95 180" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M106 157 L95 164" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M74 187 L85 180" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <circle cx="90" cy="172" r="7" fill="#4CAF50"/>
-    <circle cx="90" cy="172" r="3.5" fill="#1a2a3a"/>
-    <path d="M80 162 A10 10 0 0 1 100 162" stroke="white" stroke-width="1" opacity="0.12" fill="none"/>
-
-    <!-- Правое колесо (увеличено) -->
-    <circle cx="270" cy="172" r="38" fill="#0a1219" stroke="#4CAF50" stroke-width="2.8"/>
-    <circle cx="270" cy="172" r="32" fill="#1a2a3a" stroke="#2a3a4a" stroke-width="1.5"/>
-    <circle cx="270" cy="172" r="22" fill="url(#wheelCenter)"/>
-    <circle cx="270" cy="172" r="16" fill="#2a3a4a"/>
-    <path d="M270 155 L270 163" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M270 189 L270 181" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M248 172 L262 172" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M292 172 L278 172" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M254 157 L265 164" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M286 187 L275 180" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M286 157 L275 164" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M254 187 L265 180" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
-    <circle cx="270" cy="172" r="7" fill="#4CAF50"/>
-    <circle cx="270" cy="172" r="3.5" fill="#1a2a3a"/>
-    <path d="M260 162 A10 10 0 0 1 280 162" stroke="white" stroke-width="1" opacity="0.12" fill="none"/>
-
     <!-- ===== НАДПИСЬ AUTO ===== -->
-    <text x="180" y="224" font-family="system-ui, sans-serif" font-size="20" fill="#A5D6A7" text-anchor="middle" font-weight="700" letter-spacing="3">AUTO</text>
-    <path d="M148 230 L212 230" stroke="#A5D6A7" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+    <text x="180" y="222" font-family="system-ui, sans-serif" font-size="20" fill="#A5D6A7" text-anchor="middle" font-weight="700" letter-spacing="3">AUTO</text>
+    <path d="M148 228 L212 228" stroke="#A5D6A7" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
 
     <!-- ===== ДОПОЛНИТЕЛЬНЫЕ ДЕТАЛИ ===== -->
     <!-- Боковые вентиляционные отверстия -->
