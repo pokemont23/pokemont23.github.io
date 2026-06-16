@@ -9,7 +9,7 @@ const EMAILJS_PUBLIC_KEY = 'wjf6w7Rb0kONhP3Jv';
 
 function formatPrice(usd) {
     const byn = Math.round(usd * USD_TO_BYN);
-    return `${usd.toLocaleString()} $ / ${byn.toLocaleString()} Br`;
+    return `${usd.toLocaleString()}  / ${byn.toLocaleString()} Br`;
 }
 
 // ========== ЗАГРУЗКА ДАННЫХ ==========
