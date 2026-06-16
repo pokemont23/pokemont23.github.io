@@ -1,6 +1,6 @@
 // ========== НАСТРОЙКИ ==========
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTww-OnfU1ca9Ef78Dfd8WpGxP8bheCVLO9rRW-F0UgCktayrfl6suklDsygTcl1uU79o2q--brHV7G/pub?gid=0&single=true&output=csv';
-const USD_TO_BYN = 3.2;
+const USD_TO_BYN = 2.9;
 
 // ========== EMAILJS КЛЮЧИ ==========
 const EMAILJS_SERVICE_ID = 'service_fzv2ep3';
