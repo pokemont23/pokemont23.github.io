@@ -1,4 +1,4 @@
-/* style.css — обновленный зеленый дизайн для ЛУЧШЕЕ АВТО */
+/* style.css — обновленный тёмно-зелёный дизайн для ЛУЧШЕЕ АВТО */
 
 * {
     margin: 0;
@@ -24,7 +24,7 @@ body {
 .header {
     background: rgba(18, 22, 28, 0.98);
     backdrop-filter: blur(10px);
-    border-bottom: 2px solid #66BB6A40;
+    border-bottom: 2px solid #2E7D3240;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -42,7 +42,7 @@ body {
 .logo {
     font-size: 1.8rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #66BB6A, #43A047);
+    background: linear-gradient(135deg, #388E3C, #1B5E20);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -90,13 +90,13 @@ body {
 }
 
 .btn-primary {
-    background: #4CAF50;
-    color: #11151a;
-    box-shadow: 0 6px 14px #4CAF5030;
+    background: #2E7D32;
+    color: white;
+    box-shadow: 0 6px 14px #2E7D3240;
 }
 
 .btn-primary:hover {
-    background: #43A047;
+    background: #1B5E20;
     transform: translateY(-2px);
 }
 
@@ -125,8 +125,8 @@ body {
 }
 
 .btn-card:hover {
-    background: #4CAF50;
-    color: #111;
+    background: #2E7D32;
+    color: white;
 }
 
 /* ===== HERO ===== */
@@ -147,7 +147,7 @@ body {
 }
 
 .hero-badge {
-    background: #66BB6A20;
+    background: #2E7D3220;
     color: #66BB6A;
     font-weight: 600;
     padding: 0.4rem 1rem;
@@ -212,7 +212,7 @@ body {
     content: '';
     width: 80px;
     height: 4px;
-    background: #66BB6A;
+    background: #2E7D32;
     display: block;
     margin: 0.8rem auto 0;
     border-radius: 4px;
@@ -452,7 +452,7 @@ body {
     width: 90%;
     padding: 2rem;
     position: relative;
-    border: 2px solid #66BB6A;
+    border: 2px solid #2E7D32;
     max-height: 85vh;
     overflow-y: auto;
 }
@@ -467,7 +467,7 @@ body {
 }
 
 .modal-content::-webkit-scrollbar-thumb {
-    background: #66BB6A;
+    background: #2E7D32;
     border-radius: 10px;
 }
 
@@ -482,7 +482,7 @@ body {
 }
 
 .close-modal:hover {
-    color: #43A047;
+    color: #388E3C;
     transform: scale(1.1);
 }
 
@@ -509,8 +509,8 @@ body {
 
 .gallery-prev, .gallery-next {
     position: absolute;
-    background: #66BB6A;
-    color: #111;
+    background: #2E7D32;
+    color: white;
     border: none;
     width: 40px;
     height: 40px;
@@ -531,7 +531,7 @@ body {
 }
 
 .gallery-prev:hover, .gallery-next:hover {
-    background: #43A047;
+    background: #1B5E20;
     transform: scale(1.1);
 }
 
@@ -588,7 +588,7 @@ body {
 .footer {
     background: #070b0f;
     padding: 3rem 0 1.5rem;
-    border-top: 1px solid #66BB6A20;
+    border-top: 1px solid #2E7D3240;
 }
 
 .footer-grid {
@@ -628,7 +628,7 @@ body {
 .footer-logo {
     font-size: 1.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #66BB6A, #43A047);
+    background: linear-gradient(135deg, #388E3C, #1B5E20);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -656,8 +656,8 @@ body {
 }
 
 .social-icon:hover {
-    background: #66BB6A;
-    color: #111;
+    background: #2E7D32;
+    color: white;
     transform: translateY(-3px);
 }
 
