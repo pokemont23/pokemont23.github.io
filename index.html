@@ -89,12 +89,10 @@
     <!-- Тень под машиной -->
     <ellipse cx="180" cy="180" rx="88" ry="8" fill="#000" opacity="0.25"/>
 
-    <!-- ===== КУЗОВ DODGE CHALLENGER ===== -->
-    <!-- Широкий, мускулистый кузов -->
+    <!-- ===== КУЗОВ (ровный по горизонтали) ===== -->
     <path d="M50 135 C45 142, 42 150, 48 158 L70 158 L290 158 L312 158 C318 150, 315 142, 310 135 L50 135 Z" 
           fill="url(#carBody)" stroke="#A5D6A7" stroke-width="2.2" filter="url(#softGlow)"/>
 
-    <!-- Капот -->
     <path d="M80 110 C80 100, 85 92, 95 88 L265 88 C275 92, 280 100, 280 110 L280 135 L80 135 Z" 
           fill="url(#carHood)" stroke="#A5D6A7" stroke-width="1.5"/>
 
@@ -104,8 +102,6 @@
     <!-- Линии капота -->
     <path d="M130 92 L130 130" stroke="#A5D6A7" stroke-width="1.5" opacity="0.12"/>
     <path d="M230 92 L230 130" stroke="#A5D6A7" stroke-width="1.5" opacity="0.12"/>
-    <path d="M150 96 L150 128" stroke="#A5D6A7" stroke-width="0.8" opacity="0.08"/>
-    <path d="M210 96 L210 128" stroke="#A5D6A7" stroke-width="0.8" opacity="0.08"/>
 
     <!-- Лобовое стекло -->
     <path d="M105 85 C115 65, 140 58, 180 58 C220 58, 245 65, 255 85 L255 90 L105 90 Z" 
@@ -136,7 +132,6 @@
 
     <!-- ===== РЕШЁТКА РАДИАТОРА ===== -->
     <path d="M140 140 L220 140 L230 162 L130 162 Z" fill="#0a1219" stroke="#4CAF50" stroke-width="1.8"/>
-    <!-- Вертикальные линии -->
     <line x1="145" y1="142" x2="145" y2="160" stroke="#1a2a3a" stroke-width="1.5"/>
     <line x1="155" y1="142" x2="155" y2="160" stroke="#1a2a3a" stroke-width="1.5"/>
     <line x1="165" y1="142" x2="165" y2="160" stroke="#1a2a3a" stroke-width="1.5"/>
@@ -161,44 +156,41 @@
     <path d="M115 164 L135 160 L135 166 L115 170 Z" fill="#0a1219" stroke="#4CAF50" stroke-width="0.8"/>
     <path d="M245 164 L225 160 L225 166 L245 170 Z" fill="#0a1219" stroke="#4CAF50" stroke-width="0.8"/>
 
-    <!-- ===== КОЛЁСА (исправлены, диски смотрят правильно) ===== -->
-    <!-- Левое колесо -->
-    <circle cx="90" cy="172" r="34" fill="#0a1219" stroke="#4CAF50" stroke-width="2.5"/>
-    <circle cx="90" cy="172" r="28" fill="#1a2a3a" stroke="#2a3a4a" stroke-width="1.5"/>
-    <!-- Диск -->
-    <circle cx="90" cy="172" r="20" fill="url(#wheelCenter)"/>
-    <circle cx="90" cy="172" r="14" fill="#2a3a4a"/>
-    <!-- Спицы (правильное направление — 5 лучей) -->
-    <path d="M90 158 L90 165" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M90 186 L90 179" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M72 172 L85 172" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M108 172 L95 172" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M77 159 L87 166" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M103 185 L93 178" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M103 159 L93 166" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M77 185 L87 178" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <!-- Центр диска -->
-    <circle cx="90" cy="172" r="6" fill="#4CAF50"/>
-    <circle cx="90" cy="172" r="3" fill="#1a2a3a"/>
-    <!-- Блик на диске -->
-    <path d="M82 164 A8 8 0 0 1 98 164" stroke="white" stroke-width="0.8" opacity="0.12" fill="none"/>
+    <!-- ===== КОЛЁСА (КРУПНЫЕ, МОЩНЫЕ) ===== -->
+    <!-- Левое колесо (увеличено) -->
+    <circle cx="90" cy="172" r="38" fill="#0a1219" stroke="#4CAF50" stroke-width="2.8"/>
+    <circle cx="90" cy="172" r="32" fill="#1a2a3a" stroke="#2a3a4a" stroke-width="1.5"/>
+    <circle cx="90" cy="172" r="22" fill="url(#wheelCenter)"/>
+    <circle cx="90" cy="172" r="16" fill="#2a3a4a"/>
+    <!-- Спицы (мощные) -->
+    <path d="M90 155 L90 163" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M90 189 L90 181" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M68 172 L82 172" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M112 172 L98 172" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M74 157 L85 164" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M106 187 L95 180" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M106 157 L95 164" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M74 187 L85 180" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="90" cy="172" r="7" fill="#4CAF50"/>
+    <circle cx="90" cy="172" r="3.5" fill="#1a2a3a"/>
+    <path d="M80 162 A10 10 0 0 1 100 162" stroke="white" stroke-width="1" opacity="0.12" fill="none"/>
 
-    <!-- Правое колесо -->
-    <circle cx="270" cy="172" r="34" fill="#0a1219" stroke="#4CAF50" stroke-width="2.5"/>
-    <circle cx="270" cy="172" r="28" fill="#1a2a3a" stroke="#2a3a4a" stroke-width="1.5"/>
-    <circle cx="270" cy="172" r="20" fill="url(#wheelCenter)"/>
-    <circle cx="270" cy="172" r="14" fill="#2a3a4a"/>
-    <path d="M270 158 L270 165" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M270 186 L270 179" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M252 172 L265 172" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M288 172 L275 172" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M257 159 L267 166" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M283 185 L273 178" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M283 159 L273 166" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M257 185 L267 178" stroke="#4a5a6a" stroke-width="3.5" stroke-linecap="round"/>
-    <circle cx="270" cy="172" r="6" fill="#4CAF50"/>
-    <circle cx="270" cy="172" r="3" fill="#1a2a3a"/>
-    <path d="M262 164 A8 8 0 0 1 278 164" stroke="white" stroke-width="0.8" opacity="0.12" fill="none"/>
+    <!-- Правое колесо (увеличено) -->
+    <circle cx="270" cy="172" r="38" fill="#0a1219" stroke="#4CAF50" stroke-width="2.8"/>
+    <circle cx="270" cy="172" r="32" fill="#1a2a3a" stroke="#2a3a4a" stroke-width="1.5"/>
+    <circle cx="270" cy="172" r="22" fill="url(#wheelCenter)"/>
+    <circle cx="270" cy="172" r="16" fill="#2a3a4a"/>
+    <path d="M270 155 L270 163" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M270 189 L270 181" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M248 172 L262 172" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M292 172 L278 172" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M254 157 L265 164" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M286 187 L275 180" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M286 157 L275 164" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M254 187 L265 180" stroke="#4a5a6a" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="270" cy="172" r="7" fill="#4CAF50"/>
+    <circle cx="270" cy="172" r="3.5" fill="#1a2a3a"/>
+    <path d="M260 162 A10 10 0 0 1 280 162" stroke="white" stroke-width="1" opacity="0.12" fill="none"/>
 
     <!-- ===== НАДПИСЬ AUTO ===== -->
     <text x="180" y="224" font-family="system-ui, sans-serif" font-size="20" fill="#A5D6A7" text-anchor="middle" font-weight="700" letter-spacing="3">AUTO</text>
@@ -217,7 +209,7 @@
     <!-- Нижний сплиттер -->
     <path d="M68 170 L292 170 L298 176 L62 176 Z" fill="#0a1219" stroke="#4CAF50" stroke-width="1.5" opacity="0.6"/>
 
-    <!-- Маленькие светодиоды в бампере -->
+    <!-- Светодиоды в бампере -->
     <circle cx="132" cy="164" r="2" fill="#A5D6A7" opacity="0.3"/>
     <circle cx="228" cy="164" r="2" fill="#A5D6A7" opacity="0.3"/>
 </svg>
@@ -304,7 +296,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <div class="footer-logo">🏎️ ЛУЧШЕЕ АВТО</div>
-                <p>Продажа автомобилей с пробегом в Минске с 2021 года. Более 300 довольных клиентов.</p>
+                <p>Продажа автомобилей с пробегом в Минске с 2021 года. Более 3 000 довольных клиентов.</p>
             </div>
             <div class="footer-col">
                 <h4>Навигация</h4>
@@ -363,7 +355,7 @@
             <li>✅ Кредит и лизинг от 6% без первого взноса</li>
             <li>✅ Работаем со всеми банками и лизинговыми компаниями</li>
         </ul>
-        <p>Работаем с 2021 года. Более 300 проданных автомобилей. Доверие наших клиентов — главная награда!</p>
+        <p>Работаем с 2021 года. Более 3 000 проданных автомобилей. Доверие наших клиентов — главная награда!</p>
         <button class="btn btn-primary" onclick="closeAboutModal()" style="margin-top: 1.5rem;">Закрыть</button>
     </div>
 </div>
