@@ -64,6 +64,11 @@
             <stop offset="0%" stop-color="#2E7D32"/>
             <stop offset="100%" stop-color="#1B5E20"/>
         </linearGradient>
+        <radialGradient id="porscheLight" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFF9C4"/>
+            <stop offset="70%" stop-color="#FFEB3B"/>
+            <stop offset="100%" stop-color="#F9A825"/>
+        </radialGradient>
         <filter id="glow">
             <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#A5D6A7" flood-opacity="0.12"/>
         </filter>
@@ -91,23 +96,28 @@
     <path d="M110 76 L150 72 L170 74 L140 80 Z" fill="white" opacity="0.1"/>
 
     <!-- ===== СПОЙЛЕР НА БАГАЖНИКЕ ===== -->
-    <!-- Стойки спойлера -->
     <rect x="185" y="84" width="2" height="6" fill="#1a2a3a" opacity="0.5"/>
     <rect x="205" y="84" width="2" height="6" fill="#1a2a3a" opacity="0.5"/>
-    <!-- Плоскость спойлера -->
     <path d="M178 82 L212 82 L216 86 L174 86 Z" 
           fill="url(#spoilerGrad)" stroke="#A5D6A7" stroke-width="1.2"/>
-    <!-- Уголок спойлера -->
     <path d="M176 86 L180 90 L210 90 L214 86 Z" 
           fill="#1a2a3a" opacity="0.3"/>
 
-    <!-- ===== ФАРА ===== -->
-    <rect x="252" y="102" width="14" height="6" rx="3" fill="#FFEB3B" stroke="#FFF9C4" stroke-width="0.5"/>
-    <rect x="254" y="103" width="8" height="4" rx="2" fill="white" opacity="0.6"/>
+    <!-- ===== ФАРЫ КАК У PORSCHE 911 ===== -->
+    <!-- Левая фара (круглая) -->
+    <circle cx="65" cy="104" r="8" fill="#1a2a3a" stroke="#A5D6A7" stroke-width="0.8"/>
+    <circle cx="65" cy="104" r="6" fill="url(#porscheLight)"/>
+    <circle cx="65" cy="104" r="3" fill="#FFF9C4"/>
+    <circle cx="64" cy="103" r="1.2" fill="white" opacity="0.6"/>
+
+    <!-- Правая фара (круглая) -->
+    <circle cx="245" cy="104" r="8" fill="#1a2a3a" stroke="#A5D6A7" stroke-width="0.8"/>
+    <circle cx="245" cy="104" r="6" fill="url(#porscheLight)"/>
+    <circle cx="245" cy="104" r="3" fill="#FFF9C4"/>
+    <circle cx="244" cy="103" r="1.2" fill="white" opacity="0.6"/>
 
     <!-- ===== ЗАДНИЙ ФОНАРЬ ===== -->
-    <rect x="56" y="102" width="10" height="6" rx="3" fill="#EF5350" stroke="#FF8A80" stroke-width="0.5"/>
-    <rect x="58" y="103" width="4" height="4" rx="1" fill="#FF8A80" opacity="0.5"/>
+    <rect x="56" y="102" width="6" height="6" rx="3" fill="#EF5350" stroke="#FF8A80" stroke-width="0.5"/>
 
     <!-- ===== КОЛЁСА ===== -->
     <circle cx="90" cy="125" r="18" fill="#0a1219" stroke="#A5D6A7" stroke-width="1.5"/>
