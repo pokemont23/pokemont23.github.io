@@ -773,3 +773,9 @@ body {
 .car-card, .feature {
     animation: fadeIn 0.4s ease-out;
 }
+
+.footer-col a:hover svg {
+    border-color: #66BB6A;
+    transform: scale(1.02);
+    transition: 0.3s;
+}
