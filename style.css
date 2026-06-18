@@ -779,3 +779,29 @@ body {
     transform: scale(1.02);
     transition: 0.3s;
 }
+
+/* ===== ФИКС КАРТОЧЕК: КНОПКА ВНИЗУ ===== */
+.car-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.car-card .btn-card {
+    margin-top: auto;
+}
+
+/* Выравнивание текста карточки */
+.car-card h3 {
+    margin-bottom: 0.3rem;
+}
+
+.car-specs {
+    flex-grow: 0;
+}
+
+.car-short {
+    flex-grow: 1;
+    margin-bottom: 0.5rem;
+}
