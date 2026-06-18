@@ -28,7 +28,25 @@ async function loadCars() {
         
         carsData = [];
         for (let i = 1; i < rows.length; i++) {
-            const values = rows[i].split(',');
+            // Разбираем CSV с учётом кавычек
+const values = [];
+let current = '';
+let inQuotes = false;
+const row = rows[i];
+for (let j = 0; j < row.length; j++) {
+    const char = row[j];
+    if (char === '"') {
+        inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+        values.push(current.trim());
+        current = '';
+    } else {
+        current += char;
+    }
+}
+values.push(current.trim());
+
+            
             const car = {};
             headers.forEach((header, idx) => {
                 let val = values[idx] ? values[idx].trim().replace(/^"|"$/g, '') : '';
